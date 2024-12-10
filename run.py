@@ -49,7 +49,21 @@ class CRDSetup:
         subprocess.run(["dpkg", "--install", "google-chrome-stable_current_amd64.deb"])
         subprocess.run(['apt', 'install', '--assume-yes', '--fix-broken'])
         print("Google Chrome Installed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        
+    
+    @staticmethod
+    def installTelegram():
+        subprocess.run(["apt", "install", "--assume-yes", "telegram-desktop"])
+        print("Telegram Installed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+    @staticmethod
+    def changewall():
+        os.system(f"curl -s -L -k -o xfce-verticals.png https://gitlab.com/chamod12/changewallpaper-win10/-/raw/main/CachedImage_1024_768_POS4.jpg")
+        current_directory = os.getcwd()
+        custom_wallpaper_path = os.path.join(current_directory, "xfce-verticals.png")
+        destination_path = '/usr/share/backgrounds/xfce/'
+        shutil.copy(custom_wallpaper_path, destination_path)
+        print("Wallpaper Changed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+   
     @staticmethod
     def installQbit():
         subprocess.run(["sudo", "apt", "update"])
@@ -81,14 +95,15 @@ X-GNOME-Autostart-enabled=true""".format(link)
         os.system("service chrome-remote-desktop start")
         
         print("..........................................................") 
-        print(".....ANDZ................................") 
+        print(".....Brought By NIGGa................................") 
         print("..........................................................") 
         print("......#####...######...####....####...##.......####.......") 
         print("......##..##....##....##......##..##..##......##..##......")  
         print("......##..##....##.....####...######..##......######......") 
         print("......##..##....##........##..##..##..##......##..##......") 
         print("......#####...######...####...##..##..######..##..##......") 
-        print("..........................................................")  
+        print("..........................................................") 
+        print("..Youtube Video Tutorial - https://youtu.be/xqpCQCJXKxU ..") 
         print("..........................................................") 
         print("Log in PIN : 123456") 
         print("User Name : user") 
