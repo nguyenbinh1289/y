@@ -49,6 +49,7 @@ class CRDSetup:
         subprocess.run(["dpkg", "--install", "google-chrome-stable_current_amd64.deb"])
         subprocess.run(['apt', 'install', '--assume-yes', '--fix-broken'])
         print("Google Chrome Installed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        
     @staticmethod
     def installQbit():
         subprocess.run(["sudo", "apt", "update"])
@@ -78,9 +79,17 @@ X-GNOME-Autostart-enabled=true""".format(link)
         command = f"{CRD_SSH_Code} --pin={Pin}"
         os.system(f"su - {user} -c '{command}'")
         os.system("service chrome-remote-desktop start")
-      
         
-        
+        print("..........................................................") 
+        print(".....ANDZ................................") 
+        print("..........................................................") 
+        print("......#####...######...####....####...##.......####.......") 
+        print("......##..##....##....##......##..##..##......##..##......")  
+        print("......##..##....##.....####...######..##......######......") 
+        print("......##..##....##........##..##..##..##......##..##......") 
+        print("......#####...######...####...##..##..######..##..##......") 
+        print("..........................................................")  
+        print("..........................................................") 
         print("Log in PIN : 123456") 
         print("User Name : user") 
         print("User Pass : root") 
