@@ -1,8 +1,9 @@
 import os
 import subprocess
 
-subprocess.run(['wget', 'wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O cloudflared'])
+os.system("sudo apt install ufw")
+os.system("sudo ufw allow 8888")
+os.system("npm install -g localtunnel")
 os.system("python3 -m pip install notebook")
-os.system("chmod +x cloudflared")
-os.system("sudo mv cloudflared /usr/local/bin/")
-os.system("cloudflared tunnel --url localhost:8888 & python3 -m notebook --allow-root")
+os.system("git clone https://github.com/epic-miner/fooocus.git")
+os.system("lt --port 8888 & python3 -m notebook --allow-root & wget -q -O - https://loca.lt/mytunnelpassword")
