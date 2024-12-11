@@ -57,7 +57,7 @@ class CRDSetup:
 
     @staticmethod
     def changewall():
-        os.system(f"curl -s -L -k -o xfce-verticals.png https://gitlab.com/chamod12/changewallpaper-win10/-/raw/main/CachedImage_1024_768_POS4.jpg")
+        os.system(f"curl -s -L -k -o xfce-verticals.png https://images.pexels.com/photos/29635287/pexels-photo-29635287.jpeg?cs=srgb&dl=pexels-mnannapaneni-29635287.jpg&fm=jpg&_gl=1*dkszy5*_ga*MTQwNTg4MjM0Ni4xNzMzODkzOTI0*_ga_8JE65Q40S6*MTczMzg5MzkyMy4xLjEuMTczMzg5Mzk4NC4wLjAuMA..")
         current_directory = os.getcwd()
         custom_wallpaper_path = os.path.join(current_directory, "xfce-verticals.png")
         destination_path = '/usr/share/backgrounds/xfce/'
@@ -74,7 +74,7 @@ class CRDSetup:
     def finish(user):
         if Autostart:
             os.makedirs(f"/home/{user}/.config/autostart", exist_ok=True)
-            link = "www.youtube.com/@The_Disala"
+            link = "https://github.com/nguyenbinh1289"
             colab_autostart = """[Desktop Entry]
             print("Finalizing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
