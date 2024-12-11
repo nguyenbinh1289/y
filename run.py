@@ -3,12 +3,6 @@ import subprocess
 import shutil
 
 CRD_SSH_Code = input("Google CRD SSH Code :")
-username = "user" #@param {type:"string"}
-password = "root" #@param {type:"string"}
-os.system(f"useradd -m {username}")
-os.system(f"adduser {username} sudo")
-os.system(f"echo '{username}:{password}' | sudo chpasswd")
-os.system("sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd")
 
 Pin = 123456 #@param {type: "integer"}
 Autostart = True #@param {type: "boolean"}
@@ -57,7 +51,7 @@ class CRDSetup:
 
     @staticmethod
     def changewall():
-        os.system(f"curl -s -L -k -o xfce-verticals.png https://wallpaperswide.com/download/stunning_view_mountains_landscape_nature-1366x768.html?dw_url=download%2Fstunning_view_mountains_landscape_nature-&dw_ratio=hd&dlw_block_hd=1366x768&dlw_block_wide=2560x1080&dlw_block_standard=800x600&dlw_block_mobile=1024x1024&dlw_block_dual=1920x600&dlw_block_triple=3840x800")
+        os.system(f"curl -s -L -k -o xfce-verticals.png https://images.hdqwalls.com/download/eagle-ai-art-xh-1366x768.jpg")
         current_directory = os.getcwd()
         custom_wallpaper_path = os.path.join(current_directory, "xfce-verticals.png")
         destination_path = '/usr/share/backgrounds/xfce/'
@@ -70,24 +64,13 @@ class CRDSetup:
         subprocess.run(["sudo", "apt", "install", "-y", "qbittorrent"])
         print("Qbittorrent Installed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-    @staticmethod
-    def finish(user):
-        if Autostart:
-            os.makedirs(f"/home/{user}/.config/autostart", exist_ok=True)
-            link = "https://github.com/nguyenbinh1289"
-            colab_autostart = """[Desktop Entry]
-            print("Finalizing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
 Type=Application
 Name=Colab
 Exec=sh -c "sensible-browser {}"
 Icon=
 Comment=Open a predefined notebook at session signin.
 X-GNOME-Autostart-enabled=true""".format(link)
-            with open(f"/home/{user}/.config/autostart/colab.desktop", "w") as f:
-                f.write(colab_autostart)
-            os.system(f"chmod +x /home/{user}/.config/autostart/colab.desktop")
-            os.system(f"chown {user}:{user} /home/{user}/.config")
+           
             
         os.system(f"adduser {user} chrome-remote-desktop")
         command = f"{CRD_SSH_Code} --pin={Pin}"
