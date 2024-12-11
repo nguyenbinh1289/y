@@ -63,12 +63,6 @@ class CRDSetup:
         subprocess.run(["sudo", "apt", "update"])
         subprocess.run(["sudo", "apt", "install", "-y", "qbittorrent"])
         print("Qbittorrent Installed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
-Type=Application
-Name=Colab
-Exec=sh -c "sensible-browser {}"
-Icon=
-Comment=Open a predefined notebook at session signin.
            
             
         os.system(f"adduser {user} chrome-remote-desktop")
