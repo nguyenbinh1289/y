@@ -57,7 +57,7 @@ class CRDSetup:
 
     @staticmethod
     def changewall():
-        os.system(f"curl -s -L -k -o xfce-verticals.png https://images.pexels.com/photos/29635287/pexels-photo-29635287.jpeg?cs=srgb&dl=pexels-mnannapaneni-29635287.jpg&fm=jpg&_gl=1*dkszy5*_ga*MTQwNTg4MjM0Ni4xNzMzODkzOTI0*_ga_8JE65Q40S6*MTczMzg5MzkyMy4xLjEuMTczMzg5Mzk4NC4wLjAuMA..")
+        os.system(f"curl -s -L -k -o xfce-verticals.png https://wallpaperswide.com/download/stunning_view_mountains_landscape_nature-1366x768.html?dw_url=download%2Fstunning_view_mountains_landscape_nature-&dw_ratio=hd&dlw_block_hd=1366x768&dlw_block_wide=2560x1080&dlw_block_standard=800x600&dlw_block_mobile=1024x1024&dlw_block_dual=1920x600&dlw_block_triple=3840x800")
         current_directory = os.getcwd()
         custom_wallpaper_path = os.path.join(current_directory, "xfce-verticals.png")
         destination_path = '/usr/share/backgrounds/xfce/'
