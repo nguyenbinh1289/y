@@ -20,7 +20,6 @@ class CRDSetup:
         self.installDesktopEnvironment()
         self.changewall()
         self.installGoogleChrome()
-        self.installTelegram()
         self.installQbit()
         self.finish(user)
 
@@ -57,6 +56,13 @@ class CRDSetup:
         custom_wallpaper_path = os.path.join(current_directory, "xfce-verticals.png")
         destination_path = '/usr/share/backgrounds/xfce/'
         shutil.copy(custom_wallpaper_path, destination_path)
+        print("Wallpaper Changed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+   
+    @staticmethod
+    def installQbit():
+        subprocess.run(["sudo", "apt", "update"])
+        subprocess.run(["sudo", "apt", "install", "-y", "qbittorrent"])
+        print("Qbittorrent Installed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
     @staticmethod
     def finish(user):
@@ -66,7 +72,7 @@ class CRDSetup:
             colab_autostart = """[Desktop Entry]
             print("Finalizing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-            Type=Application
+Type=Application
 Name=Colab
 Exec=sh -c "sensible-browser {}"
 Icon=
