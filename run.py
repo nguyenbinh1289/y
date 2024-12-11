@@ -69,7 +69,6 @@ Name=Colab
 Exec=sh -c "sensible-browser {}"
 Icon=
 Comment=Open a predefined notebook at session signin.
-X-GNOME-Autostart-enabled=true""".format(link)
            
             
         os.system(f"adduser {user} chrome-remote-desktop")
