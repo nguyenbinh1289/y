@@ -1,19 +1,17 @@
-#@title **RDP**
-#@markdown  It takes 4-5 minutes for installation
-
 import os
 import subprocess
+import shutil
 
-#@markdown  Visit http://remotedesktop.google.com/headless and copy the command after Authentication
+CRD_SSH_Code = input("Google CRD SSH Code :")
+username = "user" #@param {type:"string"}
+password = "root" #@param {type:"string"}
+os.system(f"useradd -m {username}")
+os.system(f"adduser {username} sudo")
+os.system(f"echo '{username}:{password}' | sudo chpasswd")
+os.system("sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd")
 
-CRP = "" #@param {type:"string"}
-
-#@markdown Enter a Pin (more or equal to 6 digits)
 Pin = 123456 #@param {type: "integer"}
-
-#@markdown Autostart Notebook in RDP
-Autostart = False #@param {type: "boolean"}
-
+Autostart = True #@param {type: "boolean"}
 
 class CRD:
     def __init__(self, user):
@@ -49,11 +47,19 @@ class CRD:
         subprocess.run(['apt', 'install', '--assume-yes', '--fix-broken'], stdout=subprocess.PIPE)
 
     @staticmethod
+    def changewall():
+        os.system(f"curl -s -L -k -o xfce-verticals.png https://images.hdqwalls.com/download/eagle-ai-art-xh-1366x768.jpg")
+        current_directory = os.getcwd()
+        custom_wallpaper_path = os.path.join(current_directory, "xfce-verticals.png")
+        destination_path = '/usr/share/backgrounds/xfce/'
+        shutil.copy(custom_wallpaper_path, destination_path)
+        
+    @staticmethod
     def finish(user):
         print("Finalizing")
         if Autostart:
             os.makedirs(f"/home/{user}/.config/autostart", exist_ok=True)
-            link = "https://colab.research.google.com/github/PradyumnaKrishna/Colab-Hacks/blob/master/Colab%20RDP/Colab%20RDP.ipynb"
+            link = "https://github.com/nguyenbinh1289"
             colab_autostart = """[Desktop Entry]
 Type=Application
 Name=Colab
@@ -67,20 +73,33 @@ X-GNOME-Autostart-enabled=true""".format(link)
             os.system(f"chown {user}:{user} /home/{user}/.config")
 
         os.system(f"adduser {user} chrome-remote-desktop")
-        command = f"{CRP} --pin={Pin}"
+        command = f"{CRD_SSH_Code} --pin={Pin}"
         os.system(f"su - {user} -c '{command}'")
         os.system("service chrome-remote-desktop start")
         
-
-        print("Finished Succesfully")
-
+        print("..........................................................") 
+        print(".....Brought By The Disala................................") 
+        print("..........................................................") 
+        print("......#####...######...####....####...##.......####.......") 
+        print("......##..##....##....##......##..##..##......##..##......")  
+        print("......##..##....##.....####...######..##......######......") 
+        print("......##..##....##........##..##..##..##......##..##......") 
+        print("......#####...######...####...##..##..######..##..##......") 
+        print("..........................................................") 
+        print("..Youtube Video Tutorial - https://youtu.be/xqpCQCJXKxU ..") 
+        print("..........................................................") 
+        print("Log in PIN : 123456") 
+        print("User Name : user") 
+        print("User Pass : root") 
+        while True:
+            pass
 
 try:
-    if CRP == "":
+    if CRD_SSH_Code == "":
         print("Please enter authcode from the given link")
     elif len(str(Pin)) < 6:
         print("Enter a pin more or equal to 6 digits")
     else:
-        CRD(username)
+        CRDSetup(username)
 except NameError as e:
     print("'username' variable not found, Create a user first")
