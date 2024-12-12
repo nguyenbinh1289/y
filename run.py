@@ -101,9 +101,7 @@ X-GNOME-Autostart-enabled=true""".format(link)
         print("..........................................................") 
         print("Log in PIN : 123456") 
         print("User Name : user") 
-        print("User Pass : root") 
-        while True:
-            pass
+        print("User Pass : root")
 
 try:
     if CRD_SSH_Code == "":
