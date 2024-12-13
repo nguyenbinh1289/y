@@ -1,9 +1,10 @@
 import os
 import subprocess
 
-os.system("sudo apt install ufw")
-os.system("sudo ufw allow 8888")
-os.system("npm install -g localtunnel")
+Authtoken = input("NGORK AUTHTOKEN :")
+subprocess.run(['wget', 'wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrtgzok-v3-stable-linux-amd64'])
+os.system("tar -xvf ngrok-v3-stable-linux-amd64.tgz")
+os.system("sudo mv ngrok /usr/local/bin/")
 os.system("python3 -m pip install notebook")
-os.system("git clone https://github.com/epic-miner/fooocus.git")
-os.system("lt --port 8888 & python3 -m notebook --allow-root & wget -q -O - https://loca.lt/mytunnelpassword")
+os.system("ngrok config add-authtoken {Authtoken}")
+os.system("ngrok http 8888 & python3 -m notebook --allow-root")
