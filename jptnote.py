@@ -2,7 +2,7 @@ import os
 import subprocess
 
 Authtoken = input("NGORK AUTHTOKEN :")
-subprocess.run(['wget', 'wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz'])
+os.system("wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz")
 os.system("tar -xvf ngrok-v3-stable-linux-amd64.tgz")
 os.system("sudo mv ngrok /usr/local/bin/")
 os.system("python3 -m pip install notebook")
