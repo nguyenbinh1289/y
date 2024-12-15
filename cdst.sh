@@ -83,7 +83,7 @@ fi
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
-sudo cpulimit -l 80 -- sudo kvm \
+sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
     -smp 4,cores=4 \
     -M q35,usb=on \
