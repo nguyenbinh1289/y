@@ -49,7 +49,7 @@ elif [ "$user_choice" -eq 2 ]; then
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
     echo "Bạn đã chọn Linux-lite5.2."
-    file_url="https://github.com/nguyenbinh1289/y/refs/heads/main/add.py"
+    file_url="https://github.com/nguyenbinh1289/y/raw/refs/heads/main/add.py"
     file_name="add.py"
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script và chọn 1 hoặc 2."
