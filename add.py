@@ -1,23 +1,12 @@
-#@title **Create User**
-#@markdown Enter Username and Password
+import gdown
 
-import os
+# URL file Google Drive (thay đổi từ dạng "view" sang "uc" để gdown hoạt động)
+url = "https://drive.google.com/uc?id=1-3J0YK2dAL0pDD-95FvqRZX--RgUkFBd"
 
-username = "user" #@param {type:"string"}
-password = "root" #@param {type:"string"}
+# Đường dẫn lưu file sau khi tải
+output = "/mnt/linux-lite5.2-64bit.zip"  # Đường dẫn đầy đủ nơi lưu file
 
-print("Creating User and Setting it up")
+# Tải file
+gdown.download(url, output, quiet=False)
 
-# Creation of user
-os.system(f"useradd -m {username}")
-
-# Add user to sudo group
-os.system(f"adduser {username} sudo")
-    
-# Set password of user to 'root'
-os.system(f"echo '{username}:{password}' | sudo chpasswd")
-
-# Change default shell from sh to bash
-os.system("sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd")
-
-print(f"User created and configured having username `{username}` and password `{password}`")
+print(f"File đã được tải về và lưu tại: {output}")
