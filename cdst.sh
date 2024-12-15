@@ -35,8 +35,9 @@ fi
 echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10"
 echo "2. Windows 11"
+echo "3.Linux-lite5.2"
 
-read -p "Nhập lựa chọn của bạn (1 hoặc 2): " user_choice
+read -p "Nhập lựa chọn của bạn (1 hoặc 2,3): " user_choice
 
 if [ "$user_choice" -eq 1 ]; then
     echo "Bạn đã chọn Windows 10."
@@ -46,6 +47,10 @@ elif [ "$user_choice" -eq 2 ]; then
     echo "Bạn đã chọn Windows 11."
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
+elif [ "$user_choice" -eq 3 ]; then
+    echo "Bạn đã chọn Linux-lite5.2."
+    file_url="https://github.com/nguyenbinh1289/y/refs/heads/main/add.py"
+    file_name="add.py"
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script và chọn 1 hoặc 2."
     exit 1
