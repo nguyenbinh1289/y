@@ -32,6 +32,7 @@ else
 fi
 
 read -p "Dung luong: " DL
+
 # Hiển thị menu lựa chọn hệ điều hành
 echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10"
