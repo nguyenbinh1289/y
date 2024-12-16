@@ -106,3 +106,20 @@ sudo kvm \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
+
+    print("##########################################################")
+    print("#                                                        #")
+    print("#                     \||/                               #")
+    print("#                     |  @___oo                          #")
+    print("#           /\  /\   / (__,,,,|                          #")
+    print("#          ) /^\) ^\/ _)                qemuGithub!      #")
+    print("#          )   /^\/   _)                CoDeD By:        #")
+    print("#          )   _ /  / _)                        UNKNOW   #")
+    print("#      /\  )/\/ ||  | )_)                                #")
+    print("#     <  >      |(,,) )__)                               #")
+    print("#      ||      /    \)___)\                              #")
+    print("#      | \____(      )___) )___                          #")
+    print("#      \______(_______;;; __;;;                          #")
+    print("#                                                        #")
+    print("##########################################################")
+    print("DONE!")
