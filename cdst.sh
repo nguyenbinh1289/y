@@ -3,7 +3,9 @@
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
-sudo apt install -y qemu-kvm unzip cpulimit python3-pip
+clear
+echo "Installing qemu"
+sudo apt install -y qemu-kvm unzip cpulimit python3-pip && curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py
 clear
 if [ $? -ne 0 ]; then
     echo "Lỗi khi cập nhật và cài đặt các gói cần thiết. Vui lòng kiểm tra lại."
@@ -100,7 +102,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py && python add.py
+python add.py
 
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
