@@ -79,6 +79,7 @@ fi
 # Cài đặt gdown và chạy file Python
 echo "Đang cài đặt gdown và chạy file $file_name..."
 pip install gdown
+clear
 python3 "/mnt/$file_name"
 clear
 if [ $? -ne 0 ]; then
