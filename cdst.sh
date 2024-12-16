@@ -4,6 +4,7 @@
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
+clear
 if [ $? -ne 0 ]; then
     echo "Lỗi khi cập nhật và cài đặt các gói cần thiết. Vui lòng kiểm tra lại."
     exit 1
@@ -35,6 +36,8 @@ lsblk
 
 read -p "Dung lượng : " DL
 
+clear
+
 # Hiển thị menu lựa chọn hệ điều hành
 echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10"
@@ -54,8 +57,15 @@ elif [ "$user_choice" -eq 2 ]; then
 elif [ "$user_choice" -eq 3 ]; then
     echo "Bạn đã chọn Linux-lite5.2."
     wget -O andz.iso "https://mirror.freedif.org/LinuxLiteOS/isos/5.2/linux-lite-5.2-64bit.iso"
-    wget -O driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
+    wget -O driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.100/virtio-win_amd64.vfd"
     qemu-img create -f raw andz.img 480G
+    curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py && python add.py
+    clear
+fi
+    
+    # Khởi chạy máy ảo với KVM
+    echo "DONE!"
+    
     sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 12G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=driver.iso,media=cdrom -drive file=andz.iso,media=cdrom
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script."
@@ -65,6 +75,7 @@ fi
 # Tải file Python
 echo "Đang tải file $file_name từ $file_url..."
 wget -O "/mnt/$file_name" "$file_url"
+clear
 if [ $? -ne 0 ]; then
     echo "Lỗi khi tải file. Vui lòng kiểm tra kết nối mạng hoặc URL."
     exit 1
@@ -74,6 +85,7 @@ fi
 echo "Đang cài đặt gdown và chạy file $file_name..."
 pip install gdown
 python3 "/mnt/$file_name"
+clear
 if [ $? -ne 0 ]; then
     echo "Lỗi khi chạy file Python. Vui lòng kiểm tra lại."
     exit 1
@@ -86,6 +98,7 @@ sleep 5
 # Giải nén các file .zip trong thư mục /mnt
 echo "Đang giải nén tất cả các file .zip trong /mnt..."
 unzip '/mnt/*.zip' -d /mnt/
+clear
 if [ $? -ne 0 ]; then
     echo "Lỗi khi giải nén file. Vui lòng kiểm tra lại file tải về."
     exit 1
