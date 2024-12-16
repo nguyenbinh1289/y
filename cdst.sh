@@ -51,8 +51,9 @@ elif [ "$user_choice" -eq 2 ]; then
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
     echo "Bạn đã chọn Linux-lite5.2."
-    file_url="https://github.com/nguyenbinh1289/y/raw/refs/heads/main/c.py"
-    file_name="c.py"
+    wget -O andz.iso"https://mirror.freedif.org/LinuxLiteOS/isos/5.2/linux-lite-5.2-64bit.iso"
+    wget -O driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
+    qemu-img create -f raw andz.img 480G
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script."
     exit 1
