@@ -48,7 +48,7 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-    echo "Bạn đã chọn Win10superlite."
+    echo "Bạn đã chọn Linux-lite5.2."
     file_url="https://github.com/nguyenbinh1289/y/raw/refs/heads/main/c.py"
     file_name="c.py"
 else
@@ -88,6 +88,23 @@ fi
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
+print("##########################################################")
+    print("#                                                        #")
+    print("#                     \||/                               #")
+    print("#                     |  @___oo                          #")
+    print("#           /\  /\   / (__,,,,|                          #")
+    print("#          ) /^\) ^\/ _)                qemuGithub!      #")
+    print("#          )   /^\/   _)                CoDeD By:        #")
+    print("#          )   _ /  / _)                        UNKNOW   #")
+    print("#      /\  )/\/ ||  | )_)                                #")
+    print("#     <  >      |(,,) )__)                               #")
+    print("#      ||      /    \)___)\                              #")
+    print("#      | \____(      )___) )___                          #")
+    print("#      \______(_______;;; __;;;                          #")
+    print("#                                                        #")
+    print("##########################################################")
+    print("DONE!")
+
 sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
     -smp 4,cores=4 \
@@ -107,21 +124,5 @@ sudo kvm \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
 
-    print("##########################################################")
-    print("#                                                        #")
-    print("#                     \||/                               #")
-    print("#                     |  @___oo                          #")
-    print("#           /\  /\   / (__,,,,|                          #")
-    print("#          ) /^\) ^\/ _)                qemuGithub!      #")
-    print("#          )   /^\/   _)                CoDeD By:        #")
-    print("#          )   _ /  / _)                        UNKNOW   #")
-    print("#      /\  )/\/ ||  | )_)                                #")
-    print("#     <  >      |(,,) )__)                               #")
-    print("#      ||      /    \)___)\                              #")
-    print("#      | \____(      )___) )___                          #")
-    print("#      \______(_______;;; __;;;                          #")
-    print("#                                                        #")
-    print("##########################################################")
-    print("DONE!")
     while True:
         pass
