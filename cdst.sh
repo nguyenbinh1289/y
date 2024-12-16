@@ -89,22 +89,6 @@ fi
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
-print("##########################################################")
-    print("#                                                        #")
-    print("#                     \||/                               #")
-    print("#                     |  @___oo                          #")
-    print("#           /\  /\   / (__,,,,|                          #")
-    print("#          ) /^\) ^\/ _)                qemuGithub!      #")
-    print("#          )   /^\/   _)                CoDeD By:        #")
-    print("#          )   _ /  / _)                        UNKNOW   #")
-    print("#      /\  )/\/ ||  | )_)                                #")
-    print("#     <  >      |(,,) )__)                               #")
-    print("#      ||      /    \)___)\                              #")
-    print("#      | \____(      )___) )___                          #")
-    print("#      \______(_______;;; __;;;                          #")
-    print("#                                                        #")
-    print("##########################################################")
-    print("DONE!")
 
 sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
