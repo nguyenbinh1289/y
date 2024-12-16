@@ -31,6 +31,8 @@ else
     fi
 fi
 
+lsblk
+
 read -p "Dung lượng : " DL
 
 # Hiển thị menu lựa chọn hệ điều hành
@@ -54,6 +56,7 @@ elif [ "$user_choice" -eq 3 ]; then
     wget -O andz.iso"https://mirror.freedif.org/LinuxLiteOS/isos/5.2/linux-lite-5.2-64bit.iso"
     wget -O driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
     qemu-img create -f raw andz.img 480G
+    sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 12G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=driver.iso,media=cdrom -drive file=andz.iso,media=cdrom
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script."
     exit 1
