@@ -87,7 +87,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-wget -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py && python add.py
+wget -# https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py && python add.py
 
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
