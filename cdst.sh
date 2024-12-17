@@ -111,10 +111,10 @@ echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở c�
 
 sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-    -smp 4,cores=4 \
+    -smp 8,cores=8 \
     -M q35,usb=on \
     -device usb-tablet \
-    -m 12G \
+    -m 8G \
     -device virtio-balloon-pci \
     -vga virtio \
     -net nic,netdev=n0,model=virtio-net-pci \
