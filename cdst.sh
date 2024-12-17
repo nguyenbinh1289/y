@@ -38,7 +38,6 @@ lsblk
 
 read -p "Dung lượng : " DL
 
-curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py
 clear
 
 # Hiển thị menu lựa chọn hệ điều hành
@@ -103,7 +102,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-python add.py
+curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py && python add.py
 
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
