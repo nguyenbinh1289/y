@@ -5,7 +5,7 @@ echo "Đang cập nhật danh sách gói..."
 sudo apt update
 clear
 echo "Installing qemu"
-sudo apt install -y qemu-kvm unzip cpulimit python3-pip && curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py
+sudo apt install -y qemu-kvm unzip cpulimit python3-pip
 clear
 if [ $? -ne 0 ]; then
     echo "Lỗi khi cập nhật và cài đặt các gói cần thiết. Vui lòng kiểm tra lại."
@@ -38,6 +38,7 @@ lsblk
 
 read -p "Dung lượng : " DL
 
+curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py
 clear
 
 # Hiển thị menu lựa chọn hệ điều hành
