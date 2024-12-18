@@ -90,7 +90,7 @@ elif [ "$user_choice" -eq 4 ]; then
     -device virtio-serial-pci \
     -device virtio-rng-pci \
     -enable-kvm \
-    -hda /mnt/WindowXP.qcow2 \
+    -hda /mnt/a.qcow2 \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
