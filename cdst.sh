@@ -45,8 +45,9 @@ echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10"
 echo "2. Windows 11"
 echo "3.Linux-lite5.2"
+echo "4.Window XP"
 
-read -p "Nhập lựa chọn của bạn (1 hoặc 2,3): " user_choice
+read -p "Nhập lựa chọn của bạn : " user_choice
 
 if [ "$user_choice" -eq 1 ]; then
     echo "Bạn đã chọn Windows 10."
@@ -63,7 +64,43 @@ elif [ "$user_choice" -eq 3 ]; then
     qemu-img create -f raw andz.img 480G
     curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py && python add.py
     clear
-    sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 12G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=driver.iso,media=cdrom -drive file=andz.iso,media=cdrom 
+    sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 12G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=driver.iso,media=cdrom -drive file=andz.iso,media=cdrom
+elif [ "$user_choice" -eq 4 ]; then
+    echo "Bạn đã chọn Window XP."
+    wget -O "/mnt/c.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"
+    clear
+    echo "Installing..."
+    pip install gdown
+    clear
+    echo "Installing..."
+    python3 "/mnt/c.py
+    echo "Installing..."
+    clear
+    echo "Installing..."
+    curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py
+    clear
+    echo "Installing..."
+    python add.py
+    echo "Compelete"
+    sudo cpulimit -l 80 -- sudo kvm \
+    -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
+    -smp 8,cores=8 \
+    -M q35,usb=on \
+    -device usb-tablet \
+    -m 8G \
+    -device virtio-balloon-pci \
+    -vga virtio \
+    -net nic,netdev=n0,model=virtio-net-pci \
+    -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
+    -boot c \
+    -device virtio-serial-pci \
+    -device virtio-rng-pci \
+    -enable-kvm \
+    -hda /mnt/a.qcow2 \
+    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio \
+    -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
+    -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
+    -vnc :0
 else
     echo "Error404. Vui lòng chạy lại script."
     exit 1
