@@ -103,8 +103,8 @@ elif [ "$user_choice" -eq 4 ]; then
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
-    while true
-    else
+while true
+else
     echo "Error404. Vui lòng chạy lại script."
     exit 1
 fi
