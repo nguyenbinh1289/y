@@ -73,7 +73,7 @@ elif [ "$user_choice" -eq 4 ]; then
     pip install gdown
     clear
     echo "Installing..."
-    python3 "/mnt/c.py
+    python3 "/mnt/c.py"
     echo "Installing..."
     clear
     echo "Installing..."
