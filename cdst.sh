@@ -102,13 +102,15 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py && python add.py
+curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py
+clear
+python add.py
 
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
 
-sudo kvm \
+sudo cpulimit -l 80 -- sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
     -smp 8,cores=8 \
     -M q35,usb=on \
