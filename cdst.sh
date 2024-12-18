@@ -36,6 +36,8 @@ fi
 
 lsblk
 
+echo "(*Chon=120G[sdc or sdb,sda])"
+
 read -p "Dung lượng : " DL
 
 clear
@@ -64,6 +66,7 @@ elif [ "$user_choice" -eq 3 ]; then
     qemu-img create -f raw andz.img 480G
     curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py && python add.py
     clear
+    
     sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 12G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=driver.iso,media=cdrom -drive file=andz.iso,media=cdrom
 elif [ "$user_choice" -eq 4 ]; then
     echo "Bạn đã chọn Window XP."
@@ -75,7 +78,10 @@ elif [ "$user_choice" -eq 4 ]; then
     echo "Installing..."
     python3 "/mnt/c.py"
     clear
-    echo "Compelete"
+    curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py
+    python add.py
+    echo "Compelete(VM is running)"
+    
     sudo cpulimit -l 80 -- sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
     -smp 8,cores=8 \
@@ -137,8 +143,9 @@ curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/ad
 clear
 python add.py
 
+#Starting Qemu
 echo "Đang khởi chạy máy ảo..."
-echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
+echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
 
 sudo cpulimit -l 80 -- sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
