@@ -1,7 +1,7 @@
 import gdown
 
 # URL file Google Drive
-url = "https://drive.google.com/u/1/uc?id=1Ipu4zbxH52T3km44E8pkR-nZWc_YScKH"
+url = "https://drive.google.com/uc?id=1Ipu4zbxH52T3km44E8pkR-nZWc_YScKH"
 
 # Đường dẫn lưu file sau khi tải
 output = "/mnt/"  # Đổi tên file tùy ý
