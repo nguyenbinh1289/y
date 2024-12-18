@@ -1,10 +1,10 @@
 import gdown
 
 # URL file Google Drive
-url = "https://drive.google.com/u/1/uc?id=1i2e1XNJ3fjcFfHsAMyML5XCQ0HVxFkK_"
+url = "https://drive.google.com/u/1/uc?id=1Ipu4zbxH52T3km44E8pkR-nZWc_YScKH"
 
 # Đường dẫn lưu file sau khi tải
-output = "/mnt/Windows10 SuperLite.zip"  # Đổi tên file tùy ý
+output = "/mnt/"  # Đổi tên file tùy ý
 
 # Tải file
 gdown.download(url, output, quiet=False)
