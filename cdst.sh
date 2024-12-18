@@ -76,11 +76,6 @@ elif [ "$user_choice" -eq 4 ]; then
     python3 "/mnt/c.py"
     echo "Installing..."
     clear
-    echo "Installing..."
-    curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py
-    clear
-    echo "Installing..."
-    python add.py
     echo "Compelete"
     sudo cpulimit -l 80 -- sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
@@ -101,6 +96,8 @@ elif [ "$user_choice" -eq 4 ]; then
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
+while true
+
 else
     echo "Error404. Vui lòng chạy lại script."
     exit 1
@@ -143,7 +140,6 @@ curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/ad
 clear
 python add.py
 
-# Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
 
