@@ -1,10 +1,10 @@
 import gdown
 
 # URL file Google Drive
-url = "https://drive.google.com/uc?id=1lEqd64y8N_vcKPZYP3pki9ReTeefnlFf"
+url = "https://drive.google.com/uc?id=1mY80TL50siOAEWnc20Lbxh2qoUtSnRwW"
 
 # Đường dẫn lưu file sau khi tải
-output = "/mnt/win2k12r2.zip"  # Đổi tên file tùy ý
+output = "/mnt/winXP.zip"  # Đổi tên file tùy ý
 
 # Tải file
 gdown.download(url, output, quiet=False)
