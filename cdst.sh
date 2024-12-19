@@ -47,6 +47,7 @@ echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10"
 echo "2. Windows 11"
 echo "3.Linux-lite5.2"
+echo "4.Win2k12r2"
 
 read -p "Nhập lựa chọn của bạn : " user_choice
 
@@ -65,44 +66,14 @@ elif [ "$user_choice" -eq 3 ]; then
     qemu-img create -f raw andz.img 480G
     clear
     wget -O "/mnt/add.py" "https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py"
+    clear
     python /mnt/add.py
-    
-    #Compelete(VM is running)
-    sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 8,cores=8 -M q35,usb=on -device usb-tablet -m 12G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=driver.iso,media=cdrom -drive file=andz.iso,media=cdrom
+    echo "VM is running"
+    sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 8,cores=8 -M q35,usb=on -device usb-tablet -m 10G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=driver.iso,media=cdrom -drive file=andz.iso,media=cdrom
 elif [ "$user_choice" -eq 4 ]; then
-    echo "Bạn đã chọn Window XP."
-    wget -O "/mnt/c.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"
-    clear
-    echo "Installing..."
-    pip install gdown
-    clear
-    echo "Installing..."
-    python3 "/mnt/c.py"
-    clear
-    wget -O "/mnt/add.py" "https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py"
-    python /mnt/add.py
-
-    #Compelete(VM is running)
-    sudo cpulimit -l 80 -- sudo kvm \
-    -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-    -smp 8,cores=8 \
-    -M q35,usb=on \
-    -device usb-tablet \
-    -m 8G \
-    -device virtio-balloon-pci \
-    -vga virtio \
-    -net nic,netdev=n0,model=virtio-net-pci \
-    -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
-    -boot c \
-    -device virtio-serial-pci \
-    -device virtio-rng-pci \
-    -enable-kvm \
-    -hda /mnt/a.qcow2 \
-    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio \
-    -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
-    -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
-    -vnc :0
-while true
+    echo "Bạn đã chọn Window2k12r2."
+    file_url="https://github.com/nguyenbinh1289/y/raw/main/c.py"
+    file_name="c.py"
 else
     echo "Error404. Vui lòng chạy lại script."
     exit 1
@@ -141,8 +112,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-curl -s -l https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py
-python add.py
+wget -O "/mnt/add.py" "https://raw.githubusercontent.com/nguyenbinh1289/y/refs/heads/main/add.py"
+clear
+python3 /mnt/add.py
 
 #Starting Qemu
 echo "Đang khởi chạy máy ảo..."
