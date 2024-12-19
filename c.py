@@ -1,7 +1,7 @@
 import gdown
 
 # URL file Google Drive
-url = "https://drive.google.com/uc?id=1mY80TL50siOAEWnc20Lbxh2qoUtSnRwW"
+url = "https://drive.google.com/uc?id=1U98iN_h2wwBOVHkUgXkYI_IrfPZdaXx1"
 
 # Đường dẫn lưu file sau khi tải
 output = "/mnt/winXP.zip"  # Đổi tên file tùy ý
