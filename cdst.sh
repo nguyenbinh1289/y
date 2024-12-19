@@ -47,7 +47,7 @@ echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10"
 echo "2. Windows 11"
 echo "3.Linux-lite5.2"
-echo "4.Window 2k12r2"
+echo "4.Window 2k12r2(error)"
 
 read -p "Nhập lựa chọn của bạn : " user_choice
 
