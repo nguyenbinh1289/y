@@ -1,8 +1,7 @@
 #Installing
 sudo apt update
 sudo apt install qemu-system-x86_64 -y unzip cpulimit python3-pip
-clear
-pip install gdown
+clear 
 if [ $? -ne 0 ]; then
     echo "Lỗi khi cập nhật và cài đặt các gói cần thiết. Vui lòng kiểm tra lại."
     exit 1
@@ -45,8 +44,8 @@ read -p "Nhập lựa chọn của bạn : " user_choice
 
 if [ "$user_choice" -eq 1 ]; then
   echo "Bạn đã chọn Windows XP."
-  file_url=""
-  file_name="
+  file_url="https://github.com/nguyenbinh1289/y/raw/main/c.py"
+  file_name="c.py"
 else
      echo "Error404. Vui lòng chạy lại script."
      exit 1
