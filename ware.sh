@@ -12,6 +12,8 @@ elif [ "$user_choice" -eq 2 ]; then
   exit 1
 else
   echo "Error404. chose again"
+  wget https://github.com/nguyenbinh1289/y/raw/main/addNo.sh && chmod +x addNo.sh
+  sudo ./addNo.sh
 fi
 
 
