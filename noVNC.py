@@ -13,10 +13,8 @@ Port = input("Set port cho vnc")
 print ("code for vnc_proxy :")
 print ("./noVNC/utils/novnc_proxy --listen {Your Port}")
 print ("!Lưu ý: Nhập lệnh vnc ở trang khác.")
-curl -s -l "https://github.com/nguyenbinh1289/y/raw/main/ware.sh"
+os.system("wget https://github.com/nguyenbinh1289/y/raw/main/ware.sh")
+os.system("clear")
+os.system("chmod +x ware.sh")
 os.system("sudo ./ware.sh")
-
-
-
-
 
