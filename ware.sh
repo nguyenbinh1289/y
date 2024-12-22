@@ -4,8 +4,6 @@ read -p "Yes/No : " user_choice
 
 if [ "$user_choice" -eq Yes ]; then
   clear
-  echo "Staring noVNC"
-  ngrok http
   
 else
      echo "Error404. Vui lòng chạy lại script."
