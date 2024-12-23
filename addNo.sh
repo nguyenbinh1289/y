@@ -6,5 +6,6 @@ elif [ "$answer" -eq 2 ]; then
 clear
 exit 1
 else
+clear
 echo "Error.Chose again!"
 sudo ./addNo.sh
