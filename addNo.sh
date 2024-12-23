@@ -5,4 +5,6 @@ sudo ./ware.sh
 elif [ "$answer" -eq 2]; then
 clear
 exit 1
-fi
+else
+echo "Error.Chose again!"
+sudo ./addNo.sh
