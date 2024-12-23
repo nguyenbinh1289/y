@@ -1,4 +1,4 @@
-read -p "1.Yes/2.No : " answer
+read -p "1.Continue/2.Cancel : " answer
 if [ "$answer" -eq 1 ]; then
 clear
 sudo ./ware.sh
