@@ -1,5 +1,4 @@
 import os
 
-Port = input("Set port cho VNC và NGROK :")
-link = input("Link vnc_proxy :")
+link = input("Link proxy :")
 os.system("ngrok http {Port} & {link}")
