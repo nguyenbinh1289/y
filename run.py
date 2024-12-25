@@ -40,8 +40,6 @@ class CRDSetup:
         os.system("sudo apt purge light-locker")
         os.system("sudo apt install --reinstall xfce4-screensaver")
         os.system("sudo service lightdm stop")
-        os.system("sudo apt-get install dbus-x11 -y")
-        os.system("service dbus start")
         print("Installed XFCE4 Desktop Environment !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
     @staticmethod
