@@ -62,17 +62,6 @@ class CRDSetup:
         subprocess.run(["sudo", "apt", "update"])
         subprocess.run(["sudo", "apt", "install", "-y", "qbittorrent"])
         print("Qbittorrent Installed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
-Type=Application
-Name=Colab
-Exec=sh -c "sensible-browser {}"
-Icon=
-Comment=Open a predefined notebook at session signin.
-X-GNOME-Autostart-enabled=true""".format(link)
-            with open(f"/home/{user}/.config/autostart/colab.desktop", "w") as f:
-                f.write(colab_autostart)
-            os.system(f"chmod +x /home/{user}/.config/autostart/colab.desktop")
-            os.system(f"chown {user}:{user} /home/{user}/.config")
             
         os.system(f"adduser {user} chrome-remote-desktop")
         command = f"{CRD_SSH_Code} --pin={Pin}"
