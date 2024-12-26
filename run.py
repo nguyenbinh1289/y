@@ -63,14 +63,6 @@ class CRDSetup:
         subprocess.run(["sudo", "apt", "install", "-y", "qbittorrent"])
         print("Qbittorrent Installed !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
-    @staticmethod
-    def finish(user):
-        if Autostart:
-            os.makedirs(f"/home/{user}/.config/autostart", exist_ok=True)
-            link = "https://github.com/nguyenbinh1289"
-            colab_autostart = """[Desktop Entry]
-            print("Finalizing !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
 Type=Application
 Name=Colab
 Exec=sh -c "sensible-browser {}"
