@@ -1,12 +1,14 @@
 echo "Do you want to continue? :"
 
-read -p "1.Yes/2.No : " user_choice
+read -p "Yes/No : " user_choice
 
-if [ "$user_choice" -eq 1 ]; then
+case $user_choice in
+[yY][eE][sS]
   clear
   curl -s -L -o ngNovnc.py "https://raw.githubusercontent.com/nguyenbinh1289/y/main/NGrok&novnc.py"
   python3 ngNovnc.py
-elif [ "$user_choice" -eq 2 ]; then
+case $user_choice in
+[nN][oO]
   clear
   exit 1
 else
