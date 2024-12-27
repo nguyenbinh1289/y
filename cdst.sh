@@ -6,6 +6,8 @@ sudo apt update
 clear
 echo "Installing qemu"
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
+sudo apt-get install -y qemu-system-x86-64
+
 clear
 if [ $? -ne 0 ]; then
     echo "Lỗi khi cập nhật và cài đặt các gói cần thiết. Vui lòng kiểm tra lại."
