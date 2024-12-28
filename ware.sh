@@ -21,11 +21,11 @@ case $user_choice in
   *)
   ;;
   esac
-fi
 
 if [ ! -e $Temp_Dir/.installed ]; then
 python3 ngNovnc.py
 else
 echo "Error. Chose again"
 sudo ./ware.sh
+fi
 
