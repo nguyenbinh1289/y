@@ -4,7 +4,7 @@ Temp_Dir=/home/username
 max_retries=50
 timeout=1
 
-echo "Do you want to continue? :"
+echo "Do you want to continue?"
 
 read -p "Yes/No : " user_choice
 
@@ -23,9 +23,8 @@ case $user_choice in
   esac
 
 if [ ! -e $Temp_Dir/.installed ]; then
-python3 ngNovnc.py
+python3 "/$Temp_Dir/usr/local/bin/ngNovnc.py"
 else
 echo "Error. Chose again"
 sudo ./ware.sh
 fi
-
