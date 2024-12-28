@@ -1,3 +1,9 @@
+#!/bin/sh
+
+Temp_Dir=/home/username
+max_retries=50
+timeout=1
+
 echo "Do you want to continue? :"
 
 read -p "Yes/No : " user_choice
@@ -5,8 +11,8 @@ read -p "Yes/No : " user_choice
 case $user_choice in
 [yY][eE][sS])
   clear
-  curl -s -L -o ngNovnc.py "https://raw.githubusercontent.com/nguyenbinh1289/y/main/NGrok&novnc.py"
-  python3 ngNovnc.py
+  mkdir -p $Temp_Dir/usr/local/bin
+  wget -O $Temp_Dir/usr/local/bin/ngNovnc.py "https://raw.githubusercontent.com/nguyenbinh1289/y/main/NGrok&novnc.py" 
   ;;
   [nN][oO])
   clear
@@ -15,10 +21,11 @@ case $user_choice in
   *)
   ;;
   esac
-else
-  echo "Error404. chose again"
-  curl -s -L -o addNo.sh "https://github.com/nguyenbinh1289/y/raw/main/addNo.sh" && chmod +x addNo.sh
-  sudo ./addNo.sh
 fi
 
+if [ ! -e $Temp_Dir/.installed ]; then
+python3 ngNovnc.py
+else
+echo "Error. Chose again"
+sudo ./ware.sh
 
