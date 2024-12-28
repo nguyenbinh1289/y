@@ -12,7 +12,7 @@ case $user_choice in
 [yY][eE][sS])
   clear
   mkdir -p $Temp_Dir/usr/local/bin
-  wget -O $Temp_Dir/usr/local/bin/ngNovnc.py "https://raw.githubusercontent.com/nguyenbinh1289/y/main/NGrok&novnc.py" 
+  curl -s -L -o $Temp_Dir/usr/local/bin/ngNovnc.py "https://raw.githubusercontent.com/nguyenbinh1289/y/main/NGrok&novnc.py" 
   ;;
   [nN][oO])
   clear
