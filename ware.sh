@@ -12,7 +12,7 @@ case $user_choice in
 [yY][eE][sS])
   clear
   mkdir -p $Temp_Dir/usr/local/bin
-  curl -s -L -o $Temp_Dir/usr/local/bin/ngNovnc.py "https://raw.githubusercontent.com/nguyenbinh1289/y/main/NGrok&novnc.py" 
+  curl -s -L -o $Temp_Dir/usr/local/bin/ngNovnc.sh "https://raw.githubusercontent.com/nguyenbinh1289/y/main/noVNC.sh" 
   ;;
   [nN][oO])
   clear
@@ -23,7 +23,7 @@ case $user_choice in
   esac
 
 if [ ! -e $Temp_Dir/.installed ]; then
-python3 "/$Temp_Dir/usr/local/bin/ngNovnc.py"
+python3 "/$Temp_Dir/usr/local/bin/noVNC.sh"
 else
 echo "Error. Chose again"
 sudo ./ware.sh
