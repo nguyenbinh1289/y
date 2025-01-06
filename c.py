@@ -4,7 +4,7 @@ import gdown
 url = "https://drive.google.com/uc?id=15bxO6NwNJwgOfgkv1c3hweloPAZg_kq9"
 
 # Đường dẫn lưu file sau khi tải
-output = "/mnt/win10lite.rar"  # Đổi tên file tùy ý
+output = "win10lite.iso"  # Đổi tên file tùy ý
 
 # Tải file
 gdown.download(url, output, quiet=False)
