@@ -1,7 +1,7 @@
 import gdown
 
 # URL file Google Drive
-url = "https://drive.google.com/uc?id=1zRgd8Piv5r7aVmrg8aBLlnGdebE8eqUG"
+url = "https://drive.google.com/uc?id=15bxO6NwNJwgOfgkv1c3hweloPAZg_kq9"
 
 # Đường dẫn lưu file sau khi tải
 output = "/mnt/win10lite.rar"  # Đổi tên file tùy ý
