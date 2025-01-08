@@ -122,7 +122,7 @@ sudo cpulimit -l 85 -- sudo kvm \
     -smp 8,cores=8 \
     -M q35,usb=on \
     -device usb-tablet \
-    -m 8G \
+    -m 12G \
     -device virtio-balloon-pci \
     -vga virtio \
     -net nic,netdev=n0,model=virtio-net-pci \
