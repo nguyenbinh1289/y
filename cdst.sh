@@ -76,6 +76,7 @@ elif [ "$user_choice" -eq 4 ]; then
     mkdir /mnt/boot_FILES
     read -p "Download from url (iso): " URL
     read -p "Đặt tên file (giữ nguyên đơn vị file): " DB
+    qemu-img create -f raw andz.img 480G
     wget -O /mnt/boot_FILES/"$DB" "$URL"
     sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
@@ -91,6 +92,7 @@ elif [ "$user_choice" -eq 4 ]; then
     -device virtio-serial-pci \
     -device virtio-rng-pci \
     -enable-kvm \
+    -drive file=/mnt/andz.img
     -drive file=/mnt/boot_FILES/"$DB",media=cdrom \
     -drive file=/mnt/driver.iso,media=cdrom \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio \
