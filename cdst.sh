@@ -7,8 +7,8 @@ clear
 echo "Installing qemu"
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
 wget -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
-
 clear
+
 if [ $? -ne 0 ]; then
     echo "Lỗi khi cập nhật và cài đặt các gói cần thiết. Vui lòng kiểm tra lại."
     exit 1
@@ -74,15 +74,10 @@ elif [ "$user_choice" -eq 3 ]; then
     sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 12G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=driver.iso,media=cdrom -drive file=andz.iso,media=cdrom
 elif [ "$user_choice" -eq 4 ]; then
     mkdir /mnt/boot_FILES
-    read -p "Download from url (iso;qcow2;img): " URL
-    wget -O /mnt/boot_FILES/ "$URL"
-    ls /mnt/boot_FILES
-    read -p "Chọn 1 file để vô boot: " Boot_file
-    curl -s -L https://github.com/nguyenbinh1289/y/raw/main/add.sh
-echo "Đang khởi chạy máy ảo..."
-echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
-
-  sudo kvm \
+    read -p "Download from url (iso): " URL
+    read -p "Đặt tên file (giữ nguyên đơn vị file): " DB
+    wget -O /mnt/boot_FILES/"$DB" "$URL"
+    sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
     -smp 4,cores=4 \
     -M q35,usb=on \
@@ -96,13 +91,12 @@ echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở c�
     -device virtio-serial-pci \
     -device virtio-rng-pci \
     -enable-kvm \
-    -hda /mnt/boot_FILES/"$Boot_file" \
-    -drive file=/mnt/driver.iso
+    -drive file=/mnt/boot_FILES/"$DB",media=cdrom \
+    -drive file=/mnt/driver.iso,media=cdrom \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
-    while True:pass
 else
     echo "Error404. Vui lòng chạy lại script."
     exit 1
