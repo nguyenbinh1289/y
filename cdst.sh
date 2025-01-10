@@ -96,8 +96,8 @@ elif [ "$user_choice" -eq 3 ]; then
     exit 1
    ;;
    [qQ][cC][oO][wW][2])
-   sleep 3
-   echo "Loading"
+   sleep 999999
+   echo "Loading cc"
    ;;
    *)
    echo "Error. Vui long chay lai script"
