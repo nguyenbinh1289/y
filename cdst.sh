@@ -64,13 +64,13 @@ elif [ "$user_choice" -eq 3 ]; then
     mkdir /mnt/boot_FILES
     read -p "File ISO/QCOW2: " DB
     read -p "Download from url (iso): " URL
-    read -p "File_name(dat ten tuy y): " no
+    wget -O /mnt/boot_FILES/"$no" "$URL"
+    ls /mnt/boot_FILES | grep *.iso
+    read -p "Chose ISo file to boot (dat ten tuy y): " no
     case $DB in
     [iI][sS][oO])
     clear
-    #Downloading
     qemu-img create -f raw andz.img 480G
-    wget -O /mnt/boot_FILES/"$no" "$URL"
     #Starting
     sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
