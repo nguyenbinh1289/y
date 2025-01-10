@@ -62,10 +62,16 @@ elif [ "$user_choice" -eq 2 ]; then
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
     mkdir /mnt/boot_FILES
+    read -p "File ISO/QCOW2: " DB
     read -p "Download from url (iso): " URL
-    read -p "Đặt tên file (giữ nguyên đơn vị file): " DB
+    read -p "File_name(dat ten tuy y): " no
+    case $DB in
+    [iI][sS][oO])
+    clear
+    #Downloading
     qemu-img create -f raw andz.img 480G
-    wget -O /mnt/boot_FILES/"$DB" "$URL"
+    wget -O /mnt/boot_FILES/"$no" "$URL"
+    #Starting
     sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
     -smp 4,cores=4 \
@@ -81,16 +87,23 @@ elif [ "$user_choice" -eq 3 ]; then
     -device virtio-rng-pci \
     -enable-kvm \
     -drive file=/mnt/andz.img,format=raw
-    -drive file=/mnt/boot_FILES/"$DB",media=cdrom \
+    -drive file=/mnt/boot_FILES/"$no",media=cdrom \
     -drive file=/mnt/driver.iso,media=cdrom \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
     exit 1
-else
-    echo "Error404. Vui lòng chạy lại script."
-    exit 1
+   ;;
+   [qQ][cC][oO][wW][2])
+   sleep 3
+   echo "Loading"
+   ;;
+   *)
+   echo "Error. Vui long chay lai script"
+   exit 1
+   ;;
+esac
 fi
 
 # Tải file Python
