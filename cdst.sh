@@ -3,6 +3,7 @@
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
+mkdir /mnt/boot_FILES
 clear
 echo "Installing qemu"
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
@@ -61,15 +62,18 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-    mkdir /mnt/boot_FILES
+while true
+ do
     read -p "File ISO/QCOW2: " DB
-    read -p "Download from url (iso): " URL
-    wget -O /mnt/boot_FILES/"$no" "$URL"
-    ls /mnt/boot_FILES | grep *.iso
-    read -p "Chose ISo file to boot (dat ten tuy y): " no
     case $DB in
     [iI][sS][oO])
     clear
+    read -p "Download from url (iso): " URL
+    read -p "Create a name for file(giu don vi file): " name
+    wget -O /mnt/boot_FILES/"$name" "$URL"
+    clear
+    ls /mnt/boot_FILES | grep *.iso
+    read -p "Chose ISo file to boot : " no
     qemu-img create -f raw andz.img 480G
     #Starting
     sudo kvm \
@@ -96,15 +100,15 @@ elif [ "$user_choice" -eq 3 ]; then
     exit 1
    ;;
    [qQ][cC][oO][wW][2])
-   sleep 999999
    echo "Loading cc"
+   sleep 999999
    ;;
    *)
    echo "Error. Vui long chay lai script"
-   exit 1
    ;;
 esac
 fi
+done
 
 # Tải file Python
 echo "Đang tải file $file_name từ $file_url..."
