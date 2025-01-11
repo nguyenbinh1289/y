@@ -3,7 +3,6 @@
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
-mkdir /mnt/boot_FILES
 clear
 echo "Installing qemu"
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
@@ -62,19 +61,29 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-while true
- do
     read -p "File ISO/QCOW2: " DB
     case $DB in
     [iI][sS][oO])
+    if [ ! -e /mnt/boot_FILES ]; then
+     mkdir /mnt/boot_FILES &>/dev/null
     clear
     read -p "Download from url (iso): " URL
     read -p "Create a name for file(giu don vi file): " name
+    
+    if [ ! -d /mnt/boot_FILES ]; then
     wget -O /mnt/boot_FILES/"$name" "$URL"
     clear
     ls /mnt/boot_FILES | grep *.iso
     read -p "Chose ISo file to boot : " no
-    qemu-img create -f raw andz.img 480G
+    qemu-img create -f raw andz.img 480G &>/dev/null
+  fi
+    echo "NICE"
+    fi
+      ;;
+      *)
+      ;;
+      esac
+   
     #Starting
     sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
@@ -98,6 +107,7 @@ while true
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
     exit 1
+    fi
    ;;
    [qQ][cC][oO][wW][2])
    echo "Loading cc"
@@ -108,7 +118,6 @@ while true
    ;;
 esac
 fi
-done
 
 # Tải file Python
 echo "Đang tải file $file_name từ $file_url..."
