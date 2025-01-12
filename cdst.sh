@@ -66,7 +66,7 @@ elif [ "$user_choice" -eq 3 ]; then
     [iI][sS][oO])
     if [ ! -e /mnt/boot_FILES ]; then
      mkdir /mnt/boot_FILES &>/dev/null
-     wget --retries=$max_tries -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
+     wget --tries=$max_tries -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
      cd /mnt
      qemu-img create -f raw andz.img 480G
     clear
@@ -74,7 +74,7 @@ fi
     if [ ! -d /mnt/boot_FILES ]; then
     read -p "Download from url (iso): " URL
     read -p "Create a name for file(giu don vi file): " name
-    wget --retries=$max_tries -O /mnt/boot_FILES/"$name" "$URL"
+    wget --tries=$max_tries -O /mnt/boot_FILES/"$name" "$URL"
     clear
     ls /mnt/boot_FILES | grep *.iso
     read -p "Chose ISo file to boot : " no
