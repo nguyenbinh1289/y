@@ -70,7 +70,7 @@ elif [ "$user_choice" -eq 3 ]; then
      cd /mnt
      qemu-img create -f raw andz.img 480G
     clear
-    
+fi
     if [ ! -d /mnt/boot_FILES ]; then
     read -p "Download from url (iso): " URL
     read -p "Create a name for file(giu don vi file): " name
