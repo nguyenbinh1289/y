@@ -6,7 +6,6 @@ sudo apt update
 clear
 echo "Installing qemu"
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
-wget -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
 clear
 
 if [ $? -ne 0 ]; then
@@ -66,21 +65,24 @@ elif [ "$user_choice" -eq 3 ]; then
     [iI][sS][oO])
     if [ ! -e /mnt/boot_FILES ]; then
      mkdir /mnt/boot_FILES &>/dev/null
+     wget -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
+     cd /mnt
+     qemu-img create -f raw andz.img 480G
     clear
-    read -p "Download from url (iso): " URL
-    read -p "Create a name for file(giu don vi file): " name
     
     if [ ! -d /mnt/boot_FILES ]; then
+    read -p "Download from url (iso): " URL
+    read -p "Create a name for file(giu don vi file): " name
     wget -O /mnt/boot_FILES/"$name" "$URL"
     clear
     ls /mnt/boot_FILES | grep *.iso
     read -p "Chose ISo file to boot : " no
-    qemu-img create -f raw andz.img 480G &>/dev/null
   fi
     echo "NICE"
     fi
       ;;
       *)
+    echo "fail"
       ;;
       esac
    
