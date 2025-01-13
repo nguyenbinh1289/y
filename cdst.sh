@@ -64,28 +64,27 @@ elif [ "$user_choice" -eq 3 ]; then
     read -p "File ISO/QCOW2: " DB
     case $DB in
     [iI][sS][oO])
+    if [ ! -d /mnt/andz.img ]; then
+      rm /mnt/andz.img -rf
+      cd /mnt
+     qemu-img create -f raw andz.img 480G
+     clear
+fi
+
     if [ ! -e /mnt/boot_FILES ]; then
      mkdir /mnt/boot_FILES &>/dev/null
      wget --tries=$max_tries -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
-     cd /mnt
-     qemu-img create -f raw andz.img 480G
     clear
 fi
-    if [ ! -d /mnt/boot_FILES ]; then
+
+    if [ ! -e /mnt/boot_FILES/.installed ]; then
     read -p "Download from url (iso): " URL
     read -p "Create a name for file(giu don vi file): " name
     wget --tries=$max_tries -O /mnt/boot_FILES/"$name" "$URL"
     clear
     ls /mnt/boot_FILES | grep *.iso
     read -p "Chose ISo file to boot : " no
-  fi
     echo "NICE"
-    fi
-      ;;
-      *)
-    echo "fail"
-      ;;
-      esac
    
     #Starting
     sudo kvm \
@@ -110,7 +109,7 @@ fi
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
     exit 1
-    fi
+fi
    ;;
    [qQ][cC][oO][wW][2])
    echo "Loading cc"
@@ -120,7 +119,6 @@ fi
    echo "Error. Vui long chay lai script"
    ;;
 esac
-fi
 
 # Tải file Python
 echo "Đang tải file $file_name từ $file_url..."
