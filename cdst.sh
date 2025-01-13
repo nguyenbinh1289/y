@@ -73,8 +73,14 @@ fi
 
     if [ ! -e /mnt/boot_FILES ]; then
      mkdir /mnt/boot_FILES &>/dev/null
-     wget --tries=$max_tries -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
+     sudo apt-get autoremove
     clear
+fi
+
+    if [ -s /mnt/driver.iso ]; then
+      wget --tries=$max_tries -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
+      sudo apt-get autoclean
+      clear
 fi
 
     if [ ! -e /mnt/boot_FILES/.installed ]; then
