@@ -77,7 +77,7 @@ fi
     clear
 fi
 
-    if [ -s /mnt/driver.iso ]; then
+    if [ ! -e /mnt/driver.iso ]; then
       wget --tries=$max_tries -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
       sudo apt-get autoclean
       clear
