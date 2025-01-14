@@ -69,18 +69,27 @@ elif [ "$user_choice" -eq 3 ]; then
       cd /mnt
      qemu-img create -f raw andz.img 480G
      clear
+    else
+     echo "error303"
+    exit 123
 fi
 
     if [ ! -e /mnt/boot_FILES ]; then
      mkdir /mnt/boot_FILES &>/dev/null
      sudo apt-get autoremove
     clear
+    else
+     echo "error404"
+     exit 234
 fi
 
     if [ ! -e /mnt/driver.iso ]; then
       wget --tries=$max_tries -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
       sudo apt-get autoclean
       clear
+  else
+     echo "Error202. Vui lòng kiểm tra lại kết nối"
+     exit 999
 fi
 
     if [ ! -e /mnt/boot_FILES/.installed ]; then
@@ -115,6 +124,9 @@ fi
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
     exit 1
+ else
+    echo "Faild to compelete"
+    exit 2
 fi
    ;;
    [qQ][cC][oO][wW][2])
