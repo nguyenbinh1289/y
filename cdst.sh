@@ -107,7 +107,7 @@ fi
     -smp 4,cores=4 \
     -M q35,usb=on \
     -device usb-tablet \
-    -m 12G \
+    -m 10G \
     -device virtio-balloon-pci \
     -vga virtio \
     -net nic,netdev=n0,model=virtio-net-pci \
@@ -181,7 +181,7 @@ echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở c�
     -smp 4,cores=4 \
     -M q35,usb=on \
     -device usb-tablet \
-    -m 12G \
+    -m 10G \
     -device virtio-balloon-pci \
     -vga virtio \
     -net nic,netdev=n0,model=virtio-net-pci \
