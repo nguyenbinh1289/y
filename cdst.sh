@@ -60,83 +60,9 @@ elif [ "$user_choice" -eq 2 ]; then
     echo "Bạn đã chọn Windows 11."
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
-elif [ "$user_choice" -eq 3 ]; then
-    read -p "File ISO/QCOW2: " DB
-    case $DB in
-    [iI][sS][oO])
-    if [ ! -d /mnt/andz.img ]; then
-      rm /mnt/andz.img -rf
-      cd /mnt
-     qemu-img create -f raw andz.img 480G
-     clear
-    else
-     echo "error303"
-    exit 123
+else
+   echo 'error'
 fi
-
-    if [ ! -e /mnt/boot_FILES ]; then
-     mkdir /mnt/boot_FILES &>/dev/null
-     sudo apt-get autoremove
-    clear
-    else
-     echo "error404"
-     exit 234
-fi
-
-    if [ ! -e /mnt/driver.iso ]; then
-      wget --tries=$max_tries -O /mnt/driver.iso "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
-      sudo apt-get autoclean
-      clear
-  else
-     echo "Error202. Vui lòng kiểm tra lại kết nối"
-     exit 999
-fi
-
-    if [ ! -e /mnt/boot_FILES/.installed ]; then
-    read -p "Download from url (iso): " URL
-    read -p "Create a name for file(giu don vi file): " name
-    wget --tries=$max_tries -O /mnt/boot_FILES/"$name" "$URL"
-    clear
-    ls /mnt/boot_FILES | grep *.iso
-    read -p "Chose ISo file to boot : " no
-    echo "NICE"
-   
-    #Starting
-    sudo kvm \
-    -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-    -smp 4,cores=4 \
-    -M q35,usb=on \
-    -device usb-tablet \
-    -m 10G \
-    -device virtio-balloon-pci \
-    -vga virtio \
-    -net nic,netdev=n0,model=virtio-net-pci \
-    -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
-    -boot c \
-    -device virtio-serial-pci \
-    -device virtio-rng-pci \
-    -enable-kvm \
-    -drive file=/mnt/andz.img,format=raw
-    -drive file=/mnt/boot_FILES/"$no",media=cdrom \
-    -drive file=/mnt/driver.iso,media=cdrom \
-    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio \
-    -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
-    -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
-    -vnc :0
-    exit 1
- else
-    echo "Faild to compelete"
-    exit 2
-fi
-   ;;
-   [qQ][cC][oO][wW][2])
-   echo "Loading cc"
-   sleep 999999
-   ;;
-   *)
-   echo "Error. Vui long chay lai script"
-   ;;
-esac
 
 # Tải file Python
 echo "Đang tải file $file_name từ $file_url..."
