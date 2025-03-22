@@ -61,7 +61,7 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-    wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1"
+    wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
     wget -O "/mnt/a.iso" "https://www.dropbox.com/scl/fi/x9jmksxegcyo700ixor5o/en_windows_10_iot_enterprise_ltsc_2019_x64_dvd_a1aa819f.iso?rlkey=bnv7y06hnaprsul1uyp2yvx7i&st=2yp6pdbr&dl=1"
     sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
