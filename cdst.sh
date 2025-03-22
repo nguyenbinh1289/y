@@ -48,7 +48,7 @@ clear
 echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10"
 echo "2. Windows 11"
-echo "3.Others"
+echo "3.LTSC2019"
 
 read -p "Nhập lựa chọn của bạn : " user_choice
 
@@ -60,6 +60,8 @@ elif [ "$user_choice" -eq 2 ]; then
     echo "Bạn đã chọn Windows 11."
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
+elif [ "$user_choice" -eq 3 ]; then
+    
 else
    echo 'error'
 fi
