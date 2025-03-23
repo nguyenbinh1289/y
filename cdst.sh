@@ -4,9 +4,10 @@ max_tries=50
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
-clear
 echo "Installing qemu"
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
+echo "Waiting!"
+wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
 clear
 
 if [ $? -ne 0 ]; then
@@ -42,7 +43,6 @@ echo "(*Chon=120G[sdc or sdb,sda])"
 
 read -p "Dung lượng : " DL
 
-clear
 
 # Hiển thị menu lựa chọn hệ điều hành
 echo "Chọn hệ điều hành để chạy VM:"
@@ -62,15 +62,15 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-    wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
     wget -O "/mnt/a.iso" "https://www.dropbox.com/scl/fi/0hb9u9h47icg0yhder59l/Tiny10-B4-x64.iso?rlkey=5kj19qc0q65ke6zslwtx8yl32&st=bxxls42n&dl=1"
     sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 8G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=/mnt/driver.iso,media=cdrom -drive file=/mnt/a.iso,media=cdrom
       if [ $? -ne 0 ]; then
          exit
       fi
     exit
-elif [ "$user_choice" -eq 3 ]; then
-    wget -O "gdown.py" ""
+elif [ "$user_choice" -eq 4 ]; then
+    wget -O "gdown.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py" && python3 gdown.py
+    sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 8G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=/mnt/driver.iso,media=cdrom -drive file=/mnt/winWork.iso,media=cdrom
 else
    echo 'error'
    exit
