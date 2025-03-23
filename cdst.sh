@@ -46,9 +46,10 @@ clear
 
 # Hiển thị menu lựa chọn hệ điều hành
 echo "Chọn hệ điều hành để chạy VM:"
-echo "1. Windows 10"
-echo "2. Windows 11"
-echo "3.Tiny1809"
+echo "1. Windows 10/FastBoot"
+echo "2. Windows 11/FastBoot"
+echo "3.Tiny1809/FastBoot*"
+echo "4.ForWork/FastBoot*"
 
 read -p "Nhập lựa chọn của bạn : " user_choice
 
@@ -68,6 +69,8 @@ elif [ "$user_choice" -eq 3 ]; then
          exit
       fi
     exit
+elif [ "$user_choice" -eq 3 ]; then
+    wget -O "gdown.py" ""
 else
    echo 'error'
    exit
