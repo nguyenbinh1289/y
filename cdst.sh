@@ -69,7 +69,7 @@ elif [ "$user_choice" -eq 3 ]; then
       fi
     exit
 elif [ "$user_choice" -eq 4 ]; then
-    wget -O "gdown.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py" && python3 gdown.py
+    wget -O "gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py" && python3 gdown!.py
     sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 8G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=/mnt/driver.iso,media=cdrom -drive file=/mnt/winwork.iso,media=cdrom
 else
    echo 'error'
@@ -88,7 +88,6 @@ fi
 # Cài đặt gdown và chạy file Python
 echo "Đang cài đặt gdown và chạy file $file_name..."
 pip install gdown
-clear
 python3 "/mnt/$file_name"
 clear
 if [ $? -ne 0 ]; then
@@ -110,7 +109,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #Starting Qemu
-curl -s -L https://github.com/nguyenbinh1289/y/raw/main/add.sh
+clear
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
 
