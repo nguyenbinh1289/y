@@ -1,10 +1,10 @@
 import gdown
 
 # URL file Google Drive
-url = "https://drive.google.com/uc?id=1t7UXFe86NzjGTpwWIcQsQz_2Nrdp52Ly"
+url = "https://drive.google.com/uc?id=13TX80UNJQUcVwg1ullq2tfSmqji_vBHe"
 
 # Đường dẫn lưu file sau khi tải
-output = "win2019ltsc.zip"  # Đổi tên file tùy ý
+output = "winwork.iso"  # Đổi tên file tùy ý
 
 # Tải file
 gdown.download(url, output, quiet=False)
