@@ -48,7 +48,7 @@ clear
 echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10"
 echo "2. Windows 11"
-echo "3.LTSC2019"
+echo "3.Tiny1809"
 
 read -p "Nhập lựa chọn của bạn : " user_choice
 
@@ -62,7 +62,7 @@ elif [ "$user_choice" -eq 2 ]; then
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
     wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
-    wget -O "/mnt/a.iso" "https://www.dropbox.com/scl/fi/x9jmksxegcyo700ixor5o/en_windows_10_iot_enterprise_ltsc_2019_x64_dvd_a1aa819f.iso?rlkey=bnv7y06hnaprsul1uyp2yvx7i&st=2yp6pdbr&dl=1"
+    wget -O "/mnt/a.iso" "https://www.dropbox.com/scl/fi/0hb9u9h47icg0yhder59l/Tiny10-B4-x64.iso?rlkey=5kj19qc0q65ke6zslwtx8yl32&st=bxxls42n&dl=1"
     sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 8G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=/mnt/driver.iso,media=cdrom -drive file=/mnt/a.iso,media=cdrom
       if [ $? -ne 0 ]; then
          exit
