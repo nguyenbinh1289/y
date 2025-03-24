@@ -5,11 +5,6 @@ max_tries=50
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
-if [ ! -e /mnt/driver.iso ]; then
-   echo "Waiting!"
-   wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
-   sleep 3
-fi
 clear
 
 if [ $? -ne 0 ]; then
@@ -45,6 +40,11 @@ echo "(*Chon=120G[sdc or sdb,sda])"
 
 read -p "Dung lượng : " DL
 
+if [ ! -e /mnt/driver.iso ]; then
+   echo "Waiting!"
+   wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
+   sleep 1
+fi
 
 # Hiển thị menu lựa chọn hệ điều hành
 echo "Chọn hệ điều hành để chạy VM:"
@@ -66,19 +66,22 @@ elif [ "$user_choice" -eq 2 ]; then
 elif [ "$user_choice" -eq 3 ]; then
     if [ ! -e /mnt/a.iso ]; then
        wget -O "/mnt/a.iso" "https://pixeldrain.com/api/file/1stNM9qc?download"
-       sleep 3
+       sleep 1
     fi
     sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 8G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=/mnt/driver.iso,media=cdrom -drive file=/mnt/a.iso,media=cdrom
+    exit
       if [ $? -ne 0 ]; then
          exit
       fi
     exit
 elif [ "$user_choice" -eq 4 ]; then
     if [ ! -e /workspaces/action/gdown!.py ]; then
-       wget -O "gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py" && python3 gdown!.py
-       sleep 3
+       wget -O "gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"
+       sleep 1
     fi
+    pip install gdown && python3 gdown!.py
     sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 8G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=/mnt/driver.iso,media=cdrom -drive file=/mnt/winwork.iso,media=cdrom
+    exit
 else
    echo 'error'
    exit
