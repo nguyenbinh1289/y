@@ -5,9 +5,10 @@ max_tries=50
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
-echo "Waiting!"
-wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
-sleep 5
+if [ ! -e /mnt/driver.iso ]; then
+   echo "Waiting!"
+   wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
+   sleep 5
 clear
 
 if [ $? -ne 0 ]; then
