@@ -4,10 +4,10 @@ max_tries=50
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
-echo "Installing qemu"
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
 echo "Waiting!"
 wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
+sleep 5
 clear
 
 if [ $? -ne 0 ]; then
