@@ -48,7 +48,7 @@ read -p "Dung lượng : " DL
 echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10/FastBoot"
 echo "2. Windows 11/FastBoot"
-echo "3.Tiny1809/FastBoot*"
+echo "3.SL11(24H2)/FastBoot*"
 echo "4.ForWork/FastBoot*"
 
 read -p "Nhập lựa chọn của bạn : " user_choice
