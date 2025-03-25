@@ -4,7 +4,7 @@ import gdown
 url = "https://drive.google.com/uc?id=13TX80UNJQUcVwg1ullq2tfSmqji_vBHe"
 
 # Đường dẫn lưu file sau khi tải
-output = "winwork.iso"  # Đổi tên file tùy ý
+output = "/mnt/winwork.iso"  # Đổi tên file tùy ý
 
 # Tải file
 gdown.download(url, output, quiet=False)
