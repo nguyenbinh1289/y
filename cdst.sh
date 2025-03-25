@@ -121,6 +121,7 @@ fi
 
 #Starting Qemu
 clear
+qemu-img resize /mnt/a.qcow2 +100G > /dev/null
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
 
