@@ -42,9 +42,11 @@ read -p "Dung lượng : " DL
 
 if [ ! -e /mnt/driver.iso ]; then
    echo "Waiting!"
-   wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
    sleep 1
-   echo 1024 > /proc/sys/vm/nr_hugepages
+   if ! wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
+      echo "Downloading Driver Failed!"
+      exit 1
+   fi
 fi
 
 # Hiển thị menu lựa chọn hệ điều hành
