@@ -1,7 +1,7 @@
 import gdown
 
 # URL file Google Drive
-url = "https://drive.google.com/uc?id=1FZSJJFKjn7uxP1AZmIzq4zt27MZ1HNpJ"
+url = "https://drive.google.com/uc?id=1wpE_EE4JDUtD77ILXcz5xl-bOUppinSP"
 
 # Đường dẫn lưu file sau khi tải
 output = "/mnt/winwork.iso"  # Đổi tên file tùy ý
