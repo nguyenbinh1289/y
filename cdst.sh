@@ -1,6 +1,7 @@
 #!/bin/bash
 
 max_tries=50
+SPICE_PORT=5924
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
@@ -148,26 +149,25 @@ echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
 
 
-sudo kvm \
+sudo cpulimit -l 80 -- sudo kvm \
+    -daemonize \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-    -smp sockets=1,cores=4,threads=2 \
+    -smp 4,cores=4 \
     -M q35,usb=on \
     -device usb-tablet \
-    -m 8G,slots=4,maxmem=16G -mem-prealloc -mem-path /dev/hugepages \
+    -m 8G \
     -device virtio-balloon-pci \
     -vga virtio \
+    -net nic,netdev=n0,model=virtio-net-pci \
     -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
-    -device virtio-net-pci,netdev=n0,queues=4,mq=on \
     -boot c \
     -device virtio-serial-pci \
     -device virtio-rng-pci \
     -enable-kvm \
-    -object iothread,id=iothread0 \
-    -hda /mnt/a.qcow2
-    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0,cache=none,aio=threads \
-    -device nvme,drive=nvme0,iothread=iothread0,serial=deadbeaf1,num_queues=8 \
-    -overcommit mem-lock=on,cpu-pm=on \
-    -monitor stdio \
+    -drive file=/mnt/a.qcow2 \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
-    -vnc :0 \
+    -soundhw hda \
+    -chardev spicevmc,id=vdagent,name=vdagent \
+    -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
+    -spice port=${SPICE_PORT},disable-ticketing
