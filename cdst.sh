@@ -44,6 +44,7 @@ if [ ! -e /mnt/driver.iso ]; then
    echo "Waiting!"
    wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"
    sleep 1
+   echo 1024 > /proc/sys/vm/nr_hugepages
 fi
 
 # Hiển thị menu lựa chọn hệ điều hành
@@ -65,27 +66,91 @@ elif [ "$user_choice" -eq 2 ]; then
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
     if [ ! -e /mnt/a.iso ]; then
-       wget -O "/mnt/a.iso" "https://pixeldrain.com/api/file/1stNM9qc?download"
-       sleep 1
+       echo "Downloading..."
+       if ! wget -O "/mnt/a.iso" "https://pixeldrain.com/api/file/1stNM9qc?download"; then
+          echo "Download failed!"
+          exit 1
+       fi
     fi
-    sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 8G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=/mnt/driver.iso,media=cdrom -drive file=/mnt/a.iso,media=cdrom
-    exit
-      if [ $? -ne 0 ]; then
-         exit
-      fi
-    exit
+
+# Kiểm tra file ISO có thực sự tải được không
+if [ ! -s /mnt/a.iso ]; then
+    echo "Error: ISO file is empty or corrupted!"
+    rm -f "/mnt/a.iso"
+    exit 1
+fi
+    
+#Run Qemu-Kvm
+       sudo kvm \
+       -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
+       -smp sockets=1,cores=4,threads=2 \
+       -m 8G,slots=4,maxmem=16G -mem-prealloc -mem-path /dev/hugepages \
+       -M q35,usb=on \
+       -device usb-tablet \
+       -device virtio-balloon-pci \
+       -device virtio-rng-pci \
+       -vga virtio \
+       -net nic,netdev=n0,model=virtio-net-pci \
+       -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
+       -boot c \
+       -device virtio-serial-pci \
+       -enable-kvm \
+       -object iothread,id=iothread0 \
+       -drive file=/dev/"$DL",format=raw,if=none,id=nvme0,cache=none,aio=threads \
+       -device nvme,drive=nvme0,iothread=iothread0,serial=deadbeaf1,num_queues=8 \
+       -overcommit mem-lock=on,cpu-pm=on \
+       -monitor stdio \
+       -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
+       -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
+       -vnc :0 \
+       -drive file=/mnt/driver.iso,media=cdrom \
+       -drive file=/mnt/a.iso,media=cdrom
+       exit
+  
 elif [ "$user_choice" -eq 4 ]; then
     if [ ! -e /workspaces/action/gdown!.py ]; then
-       wget -O "gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"
-       sleep 1
+       echo "Downloading..."
+       if ! wget -O "gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"; then
+          echo "Download Failed!"
+          exit 1
+       fi
     fi
-    pip install gdown && python3 gdown!.py
-    sudo kvm -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm -smp 4,cores=4 -M q35,usb=on -device usb-tablet -m 8G -device virtio-balloon-pci -vga virtio -net nic,netdev=n0,model=virtio-net-pci -netdev user,id=n0,hostfwd=tcp::3389-:3389 -boot c -device virtio-serial-pci -device virtio-rng-pci -enable-kvm -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 -vnc :0 -drive file=/mnt/driver.iso,media=cdrom -drive file=/mnt/winwork.iso,media=cdrom
-    exit
-else
-   echo 'error'
-   exit
+
+    # Kiểm tra file ISO có thực sự tải được không
+if [ ! -s /mnt/winwork.iso ]; then
+    echo "Error: ISO file is empty or corrupted!"
+    rm -f "/mnt/winwork.iso"
+    exit 1
 fi
+    
+    pip install gdown && python3 gdown!.py
+
+    sudo kvm \
+    -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
+    -smp sockets=1,cores=4,threads=2 \
+    -m 8G,slots=4,maxmem=16G -mem-prealloc -mem-path /dev/hugepages \
+    -M q35,usb=on \
+    -device usb-tablet \
+    -device virtio-balloon-pci \
+    -device virtio-rng-pci \
+    -vga virtio \
+    -net nic,netdev=n0,model=virtio-net-pci \
+    -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
+    -boot c \
+    -device virtio-serial-pci \
+    -enable-kvm \
+    -object iothread,id=iothread0 \
+    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0,cache=none,aio=threads \
+    -device nvme,drive=nvme0,iothread=iothread0,serial=deadbeaf1,num_queues=8 \
+    -overcommit mem-lock=on,cpu-pm=on \
+    -monitor stdio \
+    -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
+    -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
+    -vnc :0 \
+    -drive file=/mnt/driver.iso,media=cdrom \
+    -drive file=/mnt/winwork.iso,media=cdrom
+    exit
+    
 # Tải file Python
 sleep 5
 echo "Đang tải file $file_name từ $file_url..."
@@ -126,22 +191,27 @@ sleep 3
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
 
-  sudo kvm \
+
+sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-    -smp 4,cores=4 \
+    -smp sockets=1,cores=4,threads=2 \
     -M q35,usb=on \
     -device usb-tablet \
-    -m 8G \
+    -m 8G,slots=4,maxmem=16G -mem-prealloc -mem-path /dev/hugepages \
     -device virtio-balloon-pci \
     -vga virtio \
-    -net nic,netdev=n0,model=virtio-net-pci \
     -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
+    -device virtio-net-pci,netdev=n0,queues=4,mq=on \
     -boot c \
     -device virtio-serial-pci \
     -device virtio-rng-pci \
     -enable-kvm \
-    -hda /mnt/a.qcow2 \
-    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 -monitor stdio \
+    -object iothread,id=iothread0 \
+    -drive file=/mnt/a.qcow2,if=virtio,cache=none,aio=threads \
+    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0,cache=none,aio=threads \
+    -device nvme,drive=nvme0,iothread=iothread0,serial=deadbeaf1,num_queues=8 \
+    -overcommit mem-lock=on,cpu-pm=on \
+    -monitor stdio \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
-    -vnc :0
+    -spice port=5900,addr=127.0.0.1,disable-ticketing=on
