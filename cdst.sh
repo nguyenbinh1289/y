@@ -207,11 +207,11 @@ sudo kvm \
     -device virtio-rng-pci \
     -enable-kvm \
     -object iothread,id=iothread0 \
-    -drive file=/mnt/a.qcow2,if=virtio,cache=none,aio=threads \
+    -hda /mnt/a.qcow2
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0,cache=none,aio=threads \
     -device nvme,drive=nvme0,iothread=iothread0,serial=deadbeaf1,num_queues=8 \
     -overcommit mem-lock=on,cpu-pm=on \
     -monitor stdio \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
-    -spice port=5900,addr=127.0.0.1,disable-ticketing=on
+    -vnc :0 \
