@@ -7,6 +7,10 @@ url = "https://drive.google.com/uc?id=1wpE_EE4JDUtD77ILXcz5xl-bOUppinSP"
 output = "/mnt/winwork.iso"  # Đổi tên file tùy ý
 
 # Tải file
-gdown.download(url, output, quiet=False)
+if [ ! -e /mnt/winwork.iso ]; then
+  gdown.download(url, output, quiet=False)
+  if ! gdown.download(url, output, quiet=False); then
+     echo "Download ISO Failed!"
+     exit 1
 
 print(f"File đã được tải về và lưu tại: {output}")
