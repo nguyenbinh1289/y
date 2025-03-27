@@ -1,18 +1,25 @@
 import gdown
+import os
 
-# URL file Google Drive
-url = "https://drive.google.com/uc?id=1wpE_EE4JDUtD77ILXcz5xl-bOUppinSP"
+iso_path = "/mnt/winwork.iso"
+url = "https://drive.google.com/uc?id=1wpE_EE4JDUtD77ILXcz5xl-bOUppinSP"  # Thay thế bằng link tải file ISO
 
-# Đường dẫn lưu file sau khi tải
-output = "/mnt/winwork.iso"  # Đổi tên file tùy ý
+# Kiểm tra nếu file ISO không tồn tại
+if not os.path.exists(iso_path):
+    print("Downloading...")
 
-# Tải file
-if [ ! -e /mnt/winwork.iso ]; then
-  echo "Downloading..."
-  if ! gdown.download(url, output, quiet=False); then
-     echo "Download ISO Failed!"
-     exit 1
-  fi
-fi
+    # Sử dụng gdown để tải file
+    result = gdown.download(url, iso_path, quiet=False)
 
-print(f"File đã được tải về và lưu tại: {output}")
+    # Kiểm tra xem tải xuống có thành công không
+    if result is None:  # Nếu gdown thất bại, result sẽ là None
+        print("Download ISO Failed!")
+        exit(1)
+
+# Kiểm tra nếu file ISO trống hoặc bị lỗi
+if os.path.exists(iso_path) and os.path.getsize(iso_path) == 0:
+    print("Error: ISO file is empty or corrupted!")
+    exit(1)
+
+print("Download successful!")
+print(f"File đã được tải về và lưu tại: {iso_path}")
