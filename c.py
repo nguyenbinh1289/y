@@ -12,5 +12,7 @@ if [ ! -e /mnt/winwork.iso ]; then
   if ! gdown.download(url, output, quiet=False); then
      echo "Download ISO Failed!"
      exit 1
+  fi
+fi
 
 print(f"File đã được tải về và lưu tại: {output}")
