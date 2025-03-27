@@ -8,7 +8,7 @@ output = "/mnt/winwork.iso"  # Đổi tên file tùy ý
 
 # Tải file
 if [ ! -e /mnt/winwork.iso ]; then
-  gdown.download(url, output, quiet=False)
+  echo "Downloading..."
   if ! gdown.download(url, output, quiet=False); then
      echo "Download ISO Failed!"
      exit 1
