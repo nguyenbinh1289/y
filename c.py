@@ -2,7 +2,7 @@ import gdown
 import os
 
 iso_path = "/mnt/winwork.iso"
-url = "https://drive.google.com/uc?id=1wpE_EE4JDUtD77ILXcz5xl-bOUppinSP"  # Thay thế bằng link tải file ISO
+url = "https://drive.google.com/uc?id=1a_HF_HCmw95Sj8u0T9_mvsHevQ3umh4t"  # Thay thế bằng link tải file ISO
 
 # Kiểm tra nếu file ISO không tồn tại
 if not os.path.exists(iso_path):
