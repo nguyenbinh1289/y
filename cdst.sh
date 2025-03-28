@@ -35,7 +35,6 @@ else
     fi
 fi
 
-echo 1024 > /proc/sys/vm/nr_hugepages
 lsblk
 
 echo "(*Chon=120G[sdc or sdb,sda])"
@@ -172,3 +171,4 @@ echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở c�
     -chardev spicevmc,id=vdagent,name=vdagent \
     -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
     -spice port=${SPICE_PORT},disable-ticketing
+fi
