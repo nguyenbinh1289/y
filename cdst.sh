@@ -1,5 +1,18 @@
 #!/bin/bash
 
+echo "1.NoFastBoot"
+echo "2.FastBoot"
+read -p "Chọn Phiên Bản Phù Hợp(1or2): " Ver
+  if [ "$Ver" -eq 1 ]; then
+    echo "You chose 1.NoFastBoot"
+  elif [ "$Ver" -eq 2 ]; then
+    echo "You chose 2.FastBoot"
+    curl -s -o "FastBoot.sh" "https://github.com/nguyenbinh1289/y/raw/main/ware.sh"
+  else
+     echo "Please Try Again!"
+echo "Chờ 5s trước khi tiếp tục"
+sleep 5
+
 max_tries=50
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
