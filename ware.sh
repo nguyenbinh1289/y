@@ -35,6 +35,12 @@ else
     fi
 fi
 
+ lsblk
+
+echo "(*Chon=120G[sdc or sdb,sda])"
+
+read -p "Dung lượng : " DL
+
 # Hiển thị menu lựa chọn hệ điều hành
 echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10/FastBoot"
@@ -88,6 +94,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+#Set up cho Remote
+  curl -fsSL https://tailscale.com/install.sh | sh 
+  sudo tailscaled --state=tailscaled.state
+  git clone https://github.com/novnc/noVNC.git
+
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
@@ -97,7 +108,7 @@ sudo kvm \
     -smp sockets=1,cores=4,threads=2 \
     -M q35,usb=on \
     -device usb-tablet \
-    -m 8G \
+    -m 10G \
     -device virtio-balloon-pci \
     -vga virtio \
     -net nic,netdev=n0,model=virtio-net-pci \
@@ -107,6 +118,7 @@ sudo kvm \
     -device virtio-rng-pci \
     -enable-kvm \
     -drive file=/mnt/a.qcow2 \
+    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -soundhw hda \
