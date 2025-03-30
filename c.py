@@ -1,8 +1,17 @@
 import gdown
 import os
 
+print('1.\tFull SoftWare\n2.\tNo SoftWare')
+
+Version = input("Chọn phiên Bản Phù Hợp: ")
 iso_path = "/mnt/winwork.iso"
-url = "https://drive.google.com/uc?id=1a_HF_HCmw95Sj8u0T9_mvsHevQ3umh4t"  # Thay thế bằng link tải file ISO
+if Version == "1":
+    url = "https://drive.google.com/uc?id=1a_HF_HCmw95Sj8u0T9_mvsHevQ3umh4t"
+elif Version == "2":
+    url = "https://drive.google.com/uc?id=1wpE_EE4JDUtD77ILXcz5xl-bOUppinSP"
+else:
+    print('Try Again!')
+    exit()
 
 # Kiểm tra nếu file ISO không tồn tại
 if not os.path.exists(iso_path):
