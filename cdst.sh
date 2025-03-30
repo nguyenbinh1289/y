@@ -106,6 +106,7 @@ elif [ "$user_choice" -eq 4 ]; then
     fi
       
 #Starting Qemu
+curl -fsSL https://tailscale.com/install.sh | sh > /dev/nul
 sleep 3
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
