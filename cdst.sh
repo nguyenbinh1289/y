@@ -8,6 +8,8 @@ read -p "Chọn Phiên Bản Phù Hợp(1or2): " Ver
   elif [ "$Ver" -eq 2 ]; then
     echo "You chose 2.FastBoot"
     curl -s -o "FastBoot.sh" "https://github.com/nguyenbinh1289/y/raw/main/ware.sh"
+    sudo ./FastBoot.sh
+    exit
   else
      echo "Please Try Again!"
 echo "Chờ 5s trước khi tiếp tục"
