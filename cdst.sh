@@ -104,9 +104,12 @@ elif [ "$user_choice" -eq 4 ]; then
        rm -f "/mnt/winwork.iso"
        exit 1
     fi
-      
+    
+#Set up cho Remote
+  curl -fsSL https://tailscale.com/install.sh | sh 
+  sudo tailscaled --state=tailscaled.state
+  git clone https://github.com/novnc/noVNC.git
 #Starting Qemu
-curl -fsSL https://tailscale.com/install.sh | sh > /dev/nul
 sleep 3
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
@@ -116,7 +119,7 @@ sudo kvm \
 -smp sockets=1,cores=4,threads=2 \
 -M q35,usb=on \
 -device usb-tablet \
--m 8G \
+-m 10G \
 -device virtio-balloon-pci \
 -vga virtio \
 -net nic,netdev=n0,model=virtio-net-pci \
