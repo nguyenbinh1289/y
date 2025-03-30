@@ -96,7 +96,6 @@ fi
 
 #Set up cho Remote
   curl -fsSL https://tailscale.com/install.sh | sh 
-  sudo tailscaled --state=tailscaled.state
   git clone https://github.com/novnc/noVNC.git
 
 # Khởi chạy máy ảo với KVM
