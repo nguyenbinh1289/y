@@ -14,6 +14,7 @@ read -p "Chọn Phiên Bản Phù Hợp(1or2): " Ver
      echo "Please Try Again!"
 echo "Chờ 5s trước khi tiếp tục"
 sleep 5
+  fi
 
 max_tries=50
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
@@ -71,7 +72,7 @@ echo "4.ForWork/FastBoot*"
 
 read -p "Nhập lựa chọn của bạn : " user_choice
 
-elif [ "$user_choice" -eq 3 ]; then
+if [ "$user_choice" -eq 3 ]; then
     if [ ! -e /mnt/a.iso ]; then
        echo "Downloading..."
        if ! wget -O "/mnt/a.iso" "https://pixeldrain.com/api/file/1stNM9qc?download"; then
