@@ -21,6 +21,9 @@ max_tries=50
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
+#Set up cho Remote
+  curl -fsSL https://tailscale.com/install.sh | sh 
+  git clone https://github.com/novnc/noVNC.git
 clear
 
 if [ $? -ne 0 ]; then
@@ -105,9 +108,6 @@ elif [ "$user_choice" -eq 4 ]; then
        exit 1
     fi
     
-#Set up cho Remote
-  curl -fsSL https://tailscale.com/install.sh | sh 
-  git clone https://github.com/novnc/noVNC.git
 #Starting Qemu
 sleep 3
 echo "Đang khởi chạy máy ảo..."
