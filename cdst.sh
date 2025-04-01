@@ -34,34 +34,34 @@ if [ $? -ne 0 ]; then
 fi
 
 # Kiểm tra xem /mnt đã được mount hay chưa
-echo "Kiểm tra phân vùng đã được mount vào /mnt..."
-if mount | grep "on /mnt " > /dev/null; then
-    echo "Phân vùng đã được mount vào /mnt. Tiếp tục..."
-else
-    echo "Phân vùng chưa được mount. Đang tìm phân vùng lớn hơn 500GB..."
-    partition=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 500000000000 && $3 == "" {print $1}' | head -n 1)
+#echo "Kiểm tra phân vùng đã được mount vào /mnt..."
+#if mount | grep "on /mnt " > /dev/null; then
+    #echo "Phân vùng đã được mount vào /mnt. Tiếp tục..."
+#else
+    #echo "Phân vùng chưa được mount. Đang tìm phân vùng lớn hơn 500GB..."
+    #partition=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 500000000000 && $3 == "" {print $1}' | head -n 1)
 
-    if [ -n "$partition" ]; then
-        echo "Đã tìm thấy phân vùng: /dev/$partition"
-        sudo mount "/dev/${partition}1" /mnt
-        if [ $? -ne 0 ]; then
-            echo "Lỗi khi mount phân vùng. Vui lòng kiểm tra lại."
-            exit 1
-        fi
-        echo "Phân vùng /dev/$partition đã được mount vào /mnt."
-    else
-        echo "Không tìm thấy phân vùng có dung lượng lớn hơn 500GB chưa được mount. Vui lòng kiểm tra lại."
-        exit 1
-    fi
-fi
+    #if [ -n "$partition" ]; then
+        #echo "Đã tìm thấy phân vùng: /dev/$partition"
+        #sudo mount "/dev/${partition}1" /mnt
+        #if [ $? -ne 0 ]; then
+            #echo "Lỗi khi mount phân vùng. Vui lòng kiểm tra lại."
+            #exit 1
+        #fi
+        #echo "Phân vùng /dev/$partition đã được mount vào /mnt."
+    #else
+        #echo "Không tìm thấy phân vùng có dung lượng lớn hơn 500GB chưa được mount. Vui lòng kiểm tra lại."
+        #exit 1
+    #fi
+#fi
 
 #Ổ cài
-DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 == 120000000000 {print $1}' | head -n 1)
+DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 500000000000 {print $1}' | head -n 1)
 #
-if [ ! -e /mnt/driver.iso ]; then
+if [ ! -e /workspaces/action/driver.iso ]; then
    echo "Waiting!"
    sleep 1
-   if ! wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
+   if ! wget -O "/workspaces/action/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
       echo "Downloading Driver Failed!"
       exit 1
    fi
@@ -76,17 +76,17 @@ echo "5.LINUX-MINT22.1/FastBoot*"
 read -p "Nhập lựa chọn của bạn : " user_choice
 
 if [ "$user_choice" -eq 3 ]; then
-    if [ ! -e /mnt/a.iso ]; then
+    if [ ! -e /workspaces/action/a.iso ]; then
        echo "Downloading..."
-       if ! wget -O "/mnt/a.iso" "https://pixeldrain.com/api/file/1stNM9qc?download"; then
+       if ! wget -O "/workspaces/action/a.iso" "https://pixeldrain.com/api/file/1stNM9qc?download"; then
           echo "Download failed!"
           exit 1
        fi
     fi
 elif [ "$user_choice" -eq 5 ]; then
-     if [ ! -e /mnt/a.iso ]; then
+     if [ ! -e /workspaces/action/a.iso ]; then
        echo "Downloading..."
-       if ! wget -O "/mnt/a.iso" "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-cinnamon-64bit.iso"; then
+       if ! wget -O "/workspaces/action/a.iso" "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-cinnamon-64bit.iso"; then
           echo "Download failed!"
           exit 1
        fi
@@ -94,9 +94,9 @@ elif [ "$user_choice" -eq 5 ]; then
 fi
  
 # Kiểm tra file ISO có thực sự tải được không
-if [ ! -s /mnt/a.iso ]; then
+if [ ! -s /workspaces/action/a.iso ]; then
     echo "Error: ISO file is empty or corrupted!"
-    rm -f "/mnt/a.iso"
+    rm -f "/workspaces/action/a.iso"
     exit 1
 fi
   
@@ -122,9 +122,9 @@ if [ "$user_choice" -eq 4 ]; then
      fi
      
      # Kiểm tra file ISO có thực sự tải được không
-     if [ ! -s /mnt/abc.iso ]; then
+     if [ ! -s /workspaces/action/a.iso ]; then
          echo "Error: ISO file is empty or corrupted!"
-         rm -f "/mnt/abc.iso"
+         rm -f "/workspaces/action/a.iso"
          exit 1
      fi
 fi
@@ -153,8 +153,8 @@ sudo kvm \
 -monitor stdio \
 -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
 -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
--drive file=/mnt/driver.iso,media=cdrom \
--drive file=/mnt/a.iso,media=cdrom \
+-drive file=/workspaces/action/driver.iso,media=cdrom \
+-drive file=/workspaces/action/a.iso,media=cdrom \
 -vnc :0
 exit
 fi
