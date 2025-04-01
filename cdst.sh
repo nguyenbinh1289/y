@@ -24,7 +24,7 @@ echo "Đang cập nhật danh sách gói..."
 sudo apt update
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
 #Set up cho Remote
-if ! curl -fsSL https://tailscale.com/install.sh | sh && git clone https://github.com/novnc/noVNC.git; then
+if ! git clone https://github.com/novnc/noVNC.git; then
     echo "Faild to Set remote"
     exit 1
 fi
@@ -128,7 +128,6 @@ fi
     
 #Starting Qemu
 sleep 3
-qemu-img create -f raw "/mnt/nope.img" 250G
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
 
@@ -147,7 +146,6 @@ sudo kvm \
 -device virtio-rng-pci \
 -enable-kvm \
 -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
--drive file=/mnt/nope.img,format=raw,if=none,id=nvme0 \
 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
 -monitor stdio \
 -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
