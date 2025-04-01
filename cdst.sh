@@ -92,13 +92,6 @@ if [ "$user_choice" -eq 5 ]; then
        fi
      fi
 fi
- 
-# Kiểm tra file ISO có thực sự tải được không
-if [ ! -s /workspaces/action/a.iso ]; then
-    echo "Error: ISO file is empty or corrupted!"
-    rm -f "/workspaces/action/a.iso"
-    exit 1
-fi
   
 if [ "$user_choice" -eq 4 ]; then
    if [ ! -e /workspaces/action/gdown!.py ]; then
