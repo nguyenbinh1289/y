@@ -24,8 +24,10 @@ echo "Đang cập nhật danh sách gói..."
 sudo apt update
 sudo apt install -y qemu-kvm unzip cpulimit python3-pip
 #Set up cho Remote
-  curl -fsSL https://tailscale.com/install.sh | sh 
-  git clone https://github.com/novnc/noVNC.git
+if ! curl -fsSL https://tailscale.com/install.sh | sh && git clone https://github.com/novnc/noVNC.git; then
+    echo "Faild to Set remote"
+    exit 1
+fi
 clear
 
 if [ $? -ne 0 ]; then
@@ -34,34 +36,34 @@ if [ $? -ne 0 ]; then
 fi
 
 # Kiểm tra xem /mnt đã được mount hay chưa
-#echo "Kiểm tra phân vùng đã được mount vào /mnt..."
-#if mount | grep "on /mnt " > /dev/null; then
-    #echo "Phân vùng đã được mount vào /mnt. Tiếp tục..."
-#else
-    #echo "Phân vùng chưa được mount. Đang tìm phân vùng lớn hơn 500GB..."
-    #partition=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 500000000000 && $3 == "" {print $1}' | head -n 1)
+echo "Kiểm tra phân vùng đã được mount vào /mnt..."
+if mount | grep "on /mnt " > /dev/null; then
+    echo "Phân vùng đã được mount vào /mnt. Tiếp tục..."
+else
+    echo "Phân vùng chưa được mount. Đang tìm phân vùng lớn hơn 500GB..."
+    partition=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 500000000000 && $3 == "" {print $1}' | head -n 1)
 
-    #if [ -n "$partition" ]; then
-        #echo "Đã tìm thấy phân vùng: /dev/$partition"
-        #sudo mount "/dev/${partition}1" /mnt
-        #if [ $? -ne 0 ]; then
-            #echo "Lỗi khi mount phân vùng. Vui lòng kiểm tra lại."
-            #exit 1
-        #fi
-        #echo "Phân vùng /dev/$partition đã được mount vào /mnt."
-    #else
-        #echo "Không tìm thấy phân vùng có dung lượng lớn hơn 500GB chưa được mount. Vui lòng kiểm tra lại."
-        #exit 1
-    #fi
-#fi
+    if [ -n "$partition" ]; then
+        echo "Đã tìm thấy phân vùng: /dev/$partition"
+        sudo mount "/dev/${partition}1" /mnt
+        if [ $? -ne 0 ]; then
+            echo "Lỗi khi mount phân vùng. Vui lòng kiểm tra lại."
+            exit 1
+        fi
+        echo "Phân vùng /dev/$partition đã được mount vào /mnt."
+    else
+        echo "Không tìm thấy phân vùng có dung lượng lớn hơn 500GB chưa được mount. Vui lòng kiểm tra lại."
+        exit 1
+    fi
+fi
 
 #Ổ cài
-DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 500000000000 && $3 == "" {print $1}' | head -n 1)
+DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 == 120000000000 {print $1}' | head -n 1)
 #
-if [ ! -e /workspaces/action/driver.iso ]; then
+if [ ! -e /mnt/driver.iso ]; then
    echo "Waiting!"
    sleep 1
-   if ! wget -O "/workspaces/action/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
+   if ! wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
       echo "Downloading Driver Failed!"
       exit 1
    fi
@@ -76,9 +78,9 @@ echo "5.LINUX-MINT22.1/FastBoot*"
 read -p "Nhập lựa chọn của bạn : " user_choice
 
 if [ "$user_choice" -eq 3 ]; then
-    if [ ! -e /workspaces/action/a.iso ]; then
+    if [ ! -e /mnt/a.iso ]; then
        echo "Downloading..."
-       if ! wget -O "/workspaces/action/a.iso" "https://pixeldrain.com/api/file/1stNM9qc?download"; then
+       if ! wget -O "/mnt/a.iso" "https://pixeldrain.com/api/file/1stNM9qc?download"; then
           echo "Download failed!"
           exit 1
        fi
@@ -86,9 +88,9 @@ if [ "$user_choice" -eq 3 ]; then
 fi
 
 if [ "$user_choice" -eq 5 ]; then
-     if [ ! -e /workspaces/action/a.iso ]; then
+     if [ ! -e /mnt/a.iso ]; then
        echo "Downloading..."
-       if ! wget -O "/workspaces/action/a.iso" "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-cinnamon-64bit.iso"; then
+       if ! wget -O "/mnt/a.iso" "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-cinnamon-64bit.iso"; then
           echo "Download failed!"
           exit 1
        fi
@@ -98,7 +100,7 @@ fi
 if [ "$user_choice" -eq 4 ]; then
    if [ ! -e /workspaces/action/gdown!.py ]; then
       echo "Downloading..."
-      if ! wget -O "gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"; then
+      if ! wget -O "/workspaces/action/gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"; then
          echo "Download Failed!"
          exit 1
       fi
@@ -118,14 +120,15 @@ if [ "$user_choice" -eq 4 ]; then
 fi
      
   # Kiểm tra file ISO có thực sự tải được không
-    if [ ! -s /workspaces/action/a.iso ]; then
+    if [ ! -s /mnt/a.iso ]; then
         echo "Error: ISO file is empty or corrupted!"
-        rm -f "/workspaces/action/a.iso"
+        rm -f "/mnt/a.iso"
         exit 1
     fi
     
 #Starting Qemu
 sleep 3
+qemu-img create -f raw "/mnt/nope.img" 250G
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
 
@@ -144,12 +147,13 @@ sudo kvm \
 -device virtio-rng-pci \
 -enable-kvm \
 -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
+-drive file=/mnt/nope.img,format=raw,if=none,id=nvme0 \
 -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
 -monitor stdio \
 -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
 -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
--drive file=/workspaces/action/driver.iso,media=cdrom \
--drive file=/workspaces/action/a.iso,media=cdrom \
+-drive file=/mnt/driver.iso,media=cdrom \
+-drive file=/mnt/a.iso,media=cdrom \
 -vnc :0
 exit
 fi
