@@ -5,8 +5,10 @@ echo "2.FastBoot"
 read -p "Chọn Phiên Bản Phù Hợp(1or2): " Ver
   if [ "$Ver" -eq 1 ]; then
     echo "You chose 1.NoFastBoot"
+    sleep 3
   elif [ "$Ver" -eq 2 ]; then
     echo "You chose 2.FastBoot"
+    sleep 3
     curl -s -o "FastBoot.sh" "https://github.com/nguyenbinh1289/y/raw/main/ware.sh"
     sudo ./FastBoot.sh
     exit
@@ -72,6 +74,7 @@ fi
 echo "Chọn hệ điều hành để chạy VM:"
 echo "3.SL11(24H2)/FastBoot*"
 echo "4.ForWork/FastBoot*"
+echo "5.LINUX-MINT22.1/FastBoot*"
 
 read -p "Nhập lựa chọn của bạn : " user_choice
 
@@ -83,7 +86,16 @@ if [ "$user_choice" -eq 3 ]; then
           exit 1
        fi
     fi
-
+elif [ "$user_choice" -eq 5 ]; then
+     if [ ! -e /mnt/a.iso ]; then
+       echo "Downloading..."
+       if ! wget -O "/mnt/a.iso" "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-cinnamon-64bit.iso"; then
+          echo "Download failed!"
+          exit 1
+       fi
+     fi
+fi
+ 
 # Kiểm tra file ISO có thực sự tải được không
 if [ ! -s /mnt/a.iso ]; then
     echo "Error: ISO file is empty or corrupted!"
@@ -91,22 +103,34 @@ if [ ! -s /mnt/a.iso ]; then
     exit 1
 fi
   
-elif [ "$user_choice" -eq 4 ]; then
-    if [ ! -e /workspaces/action/gdown!.py ]; then
-       echo "Downloading..."
-       if ! wget -O "gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"; then
-          echo "Download Failed!"
-          exit 1
-       fi
-    fi
+if [ "$user_choice" -eq 4 ]; then
+   if [ ! -e /workspaces/action/gdown!.py ]; then
+      echo "Downloading..."
+      if ! wget -O "gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"; then
+         echo "Download Failed!"
+         exit 1
+      fi
+   fi
 
-    # Kiểm tra file ISO có thực sự tải được không
-    pip install gdown && python3 gdown!.py
-    if [ ! -s /mnt/winwork.iso ]; then
-       echo "Error: ISO file is empty or corrupted!"
-       rm -f "/mnt/winwork.iso"
-       exit 1
-    fi
+     # Cài gdown
+     if ! command -v gdown &> /dev/null; then
+         echo "Installing gdown..."
+         pip install gdown || { echo "Failed to install gdown!"; exit 1; }
+     fi
+
+     # Chạy Script
+     if ! python3 gdown!.py; then
+         echo "Failed to Installing ISo"
+         exit 1
+     fi
+     
+     # Kiểm tra file ISO có thực sự tải được không
+     if [ ! -s /mnt/abc.iso ]; then
+         echo "Error: ISO file is empty or corrupted!"
+         rm -f "/mnt/abc.iso"
+         exit 1
+     fi
+fi
     
 #Starting Qemu
 sleep 3
