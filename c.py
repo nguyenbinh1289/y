@@ -30,5 +30,4 @@ if os.path.exists(iso_path) and os.path.getsize(iso_path) == 0:
     print("Error: ISO file is empty or corrupted!")
     exit(1)
 
-print("Download successful!")
 print(f"File đã được tải về và lưu tại: {iso_path}")
