@@ -83,7 +83,7 @@ if [ "$user_choice" -eq 3 ]; then
           exit 1
        fi
     fi
-elif [ "$user_choice" -eq 5 ]; then
+if [ "$user_choice" -eq 5 ]; then
      if [ ! -e /workspaces/action/a.iso ]; then
        echo "Downloading..."
        if ! wget -O "/workspaces/action/a.iso" "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-cinnamon-64bit.iso"; then
@@ -120,14 +120,14 @@ if [ "$user_choice" -eq 4 ]; then
          echo "Failed to Installing ISo"
          exit 1
      fi
-     
-     # Kiểm tra file ISO có thực sự tải được không
-     if [ ! -s /workspaces/action/a.iso ]; then
-         echo "Error: ISO file is empty or corrupted!"
-         rm -f "/workspaces/action/a.iso"
-         exit 1
-     fi
 fi
+     
+  # Kiểm tra file ISO có thực sự tải được không
+    if [ ! -s /workspaces/action/a.iso ]; then
+        echo "Error: ISO file is empty or corrupted!"
+        rm -f "/workspaces/action/a.iso"
+        exit 1
+    fi
     
 #Starting Qemu
 sleep 3
