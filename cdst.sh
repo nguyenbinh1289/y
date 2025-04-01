@@ -56,7 +56,7 @@ fi
 #fi
 
 #Ổ cài
-DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 500000000000 {print $1}' | head -n 1)
+DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 500000000000 && $3 == "" {print $1}' | head -n 1)
 #
 if [ ! -e /workspaces/action/driver.iso ]; then
    echo "Waiting!"
