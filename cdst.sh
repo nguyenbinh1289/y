@@ -83,6 +83,8 @@ if [ "$user_choice" -eq 3 ]; then
           exit 1
        fi
     fi
+fi
+
 if [ "$user_choice" -eq 5 ]; then
      if [ ! -e /workspaces/action/a.iso ]; then
        echo "Downloading..."
