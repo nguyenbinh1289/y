@@ -4,7 +4,7 @@ import os
 print('1.\tFull SoftWare\n2.\tNo SoftWare')
 
 Version = input("Chọn phiên Bản Phù Hợp: ")
-iso_path = "/mnt/winwork.iso"
+iso_path = "/mnt/a.iso"
 if Version == "1":
     url = "https://drive.google.com/uc?id=1a_HF_HCmw95Sj8u0T9_mvsHevQ3umh4t"
 elif Version == "2":
