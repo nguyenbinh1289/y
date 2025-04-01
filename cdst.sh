@@ -55,12 +55,9 @@ else
     fi
 fi
 
-lsblk
-
-echo "(*Chon=120G[sdc or sdb,sda])"
-
-read -p "Dung lượng : " DL
-
+#Ổ cài
+DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 == 120000000000 {print $1}' | head -n 1)
+#
 if [ ! -e /mnt/driver.iso ]; then
    echo "Waiting!"
    sleep 1
