@@ -1,7 +1,7 @@
 import gdown
 import os
 
-print('1.\tFull SoftWare\n2.\tNo SoftWare')
+print('1.\tFull SoftWare-10\n2.\tNo SoftWare-10\n3.\tWin7')
 
 Version = input("Chọn phiên Bản Phù Hợp: ")
 iso_path = "/mnt/a.iso"
@@ -9,6 +9,8 @@ if Version == "1":
     url = "https://drive.google.com/uc?id=1a_HF_HCmw95Sj8u0T9_mvsHevQ3umh4t"
 elif Version == "2":
     url = "https://drive.google.com/uc?id=1wpE_EE4JDUtD77ILXcz5xl-bOUppinSP"
+elif Version == "3":
+    url = "https://drive.google.com/uc?id=1qilZKoRPTueRs5BxCbNTMi2uMIIF6Bhu"
 else:
     print('Try Again!')
     exit()
