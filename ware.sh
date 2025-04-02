@@ -103,7 +103,7 @@ echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
 sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-    -smp sockets=1,cores=4,threads=2 \
+    -smp sockets=1,cores=2,threads=2 \
     -M q35,usb=on \
     -device usb-tablet \
     -m 10G \
