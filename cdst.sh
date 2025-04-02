@@ -58,7 +58,7 @@ else
 fi
 
 #Ổ cài
-DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 == 120000000000 {print $1}' | head -n 1)
+DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 100000000000 && $2 < 150000000000 {print $1}' | head -n 1)
 #
 if [ ! -e /mnt/driver.iso ]; then
    echo "Waiting!"
@@ -136,7 +136,7 @@ sudo kvm \
 -smp sockets=1,cores=4,threads=2 \
 -M q35,usb=on \
 -device usb-tablet \
--m 12G \
+-m 10G \
 -device virtio-balloon-pci \
 -vga virtio \
 -net nic,netdev=n0,model=virtio-net-pci \
