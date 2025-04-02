@@ -136,7 +136,7 @@ sudo kvm \
 -smp sockets=1,cores=4,threads=2 \
 -M q35,usb=on \
 -device usb-tablet \
--m 10G \
+-m 12G \
 -device virtio-balloon-pci \
 -vga virtio \
 -net nic,netdev=n0,model=virtio-net-pci \
