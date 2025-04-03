@@ -22,12 +22,7 @@ max_tries=50
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
-sudo apt install -y qemu-kvm unzip cpulimit python3-pip
-#Set up cho Remote
-if ! git clone https://github.com/novnc/noVNC.git; then
-    echo "Faild to Set remote"
-    exit 1
-fi
+sudo apt install -y qemu-kvm unzip aria2 python3-pip
 clear
 
 if [ $? -ne 0 ]; then
@@ -63,7 +58,7 @@ DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 100000000000 && $2 < 150
 if [ ! -e /mnt/driver.iso ]; then
    echo "Waiting!"
    sleep 1
-   if ! wget -O "/mnt/driver.iso" "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
+   if ! aria2c -d /mnt/driver.iso -x 16 -s 16 "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
       echo "Downloading Driver Failed!"
       exit 1
    fi
