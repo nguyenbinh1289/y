@@ -58,7 +58,7 @@ DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 100000000000 && $2 < 150
 if [ ! -e /mnt/driver.iso ]; then
    echo "Waiting!"
    sleep 1
-   if ! aria2c -d /mnt/driver.iso -x 16 -s 16 "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
+   if ! aria2c -d /mnt/ -o driver.iso -x 16 -s 16 "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
       echo "Downloading Driver Failed!"
       exit 1
    fi
