@@ -7,7 +7,7 @@ sleep 5
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
 sudo apt update
-sudo apt install -y qemu-kvm unzip cpulimit python3-pip
+sudo apt install -y qemu-kvm unzip aria2 python3-pip
 if [ $? -ne 0 ]; then
     echo "Lỗi khi cập nhật và cài đặt các gói cần thiết. Vui lòng kiểm tra lại."
     exit 1
@@ -93,10 +93,6 @@ if [ $? -ne 0 ]; then
     echo "Lỗi khi giải nén file. Vui lòng kiểm tra lại file tải về."
     exit 1
 fi
-
-#Set up cho Remote
-  curl -fsSL https://tailscale.com/install.sh | sh 
-  git clone https://github.com/novnc/noVNC.git
 
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
