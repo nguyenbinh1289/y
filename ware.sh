@@ -35,11 +35,8 @@ else
     fi
 fi
 
- lsblk
-
-echo "(*Chon=120G[sdc or sdb,sda])"
-
-read -p "Dung lượng : " DL
+# Ổ Cài
+DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 100000000000 && $2 < 150000000000 {print $1}' | head -n 1)
 
 # Hiển thị menu lựa chọn hệ điều hành
 echo "Chọn hệ điều hành để chạy VM:"
