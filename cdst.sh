@@ -18,6 +18,7 @@ echo "Chờ 5s trước khi tiếp tục"
 sleep 5
   fi
 
+SPICE_PORT=5924
 max_tries=50
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
@@ -85,7 +86,7 @@ fi
 if [ "$user_choice" -eq 5 ]; then
      if [ ! -e /mnt/a.iso ]; then
        echo "Downloading..."
-       if ! wget -O "/mnt/a.iso" "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-cinnamon-64bit.iso"; then
+       if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-cinnamon-64bit.iso"; then
           echo "Download failed!"
           exit 1
        fi
@@ -127,11 +128,12 @@ echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
 
 sudo kvm \
+-daemonize \
 -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
 -smp sockets=1,cores=2,threads=2 \
 -M q35,usb=on \
 -device usb-tablet \
--m 10G \
+-m 11G \
 -device virtio-balloon-pci \
 -vga virtio \
 -net nic,netdev=n0,model=virtio-net-pci \
@@ -147,6 +149,10 @@ sudo kvm \
 -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
 -drive file=/mnt/driver.iso,media=cdrom \
 -drive file=/mnt/a.iso,media=cdrom \
--vnc :0
+-device intel-hda \
+-device hda-duplex \
+-chardev spicevmc,id=vdagent,name=vdagent \
+-device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
+-spice port=${SPICE_PORT},disable-ticketing
 exit
 fi
