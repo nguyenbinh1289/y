@@ -71,7 +71,7 @@ if [ "$user_choice" -eq 1 ]; then
    if [ "$HDH" -eq 1 ]; then
      if [ ! -e /mnt/a.iso ]; then
         echo "Downloading..."
-        if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-cinnamon-64bit.iso"; then
+        if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-xfce-64bit.iso"; then
            echo "Download failed!"
            exit 1
         fi
