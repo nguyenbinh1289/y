@@ -13,7 +13,7 @@ elif Version == "3":
     url = "https://drive.google.com/uc?id=1qilZKoRPTueRs5BxCbNTMi2uMIIF6Bhu"
 else:
     print('Try Again!')
-    exit()
+    exit(1)
 
 # Kiểm tra nếu file ISO không tồn tại
 if not os.path.exists(iso_path):
