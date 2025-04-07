@@ -68,6 +68,7 @@ if [ "$user_choice" -eq 1 ]; then
    echo "1.Linux-Mint"
    echo "2.Debian"
    echo "3.MX Linux"
+   echo "4.Arch Linux"
    read -p "Nhập lựa chọn của bạn : " HDH
    if [ "$HDH" -eq 1 ]; then
      if [ ! -e /mnt/a.iso ]; then
@@ -89,6 +90,14 @@ if [ "$user_choice" -eq 1 ]; then
       if [ ! -e /mnt/a.iso ]; then
           echo "Downloading..."
           if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://master.dl.sourceforge.net/project/mx-linux/Old/MX-23.1/Xfce/MX-23.1_x64.iso?viasf=1"; then
+             echo "Download failed!"
+             exit 1
+          fi
+      fi
+ elif [ "$HDH" -eq 3 ]; then
+      if [ ! -e /mnt/a.iso ]; then
+          echo "Downloading..."
+          if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://mirror.freedif.org/archlinux/iso/2025.04.01/archlinux-x86_64.iso"; then
              echo "Download failed!"
              exit 1
           fi
