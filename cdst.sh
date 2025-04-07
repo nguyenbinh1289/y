@@ -84,6 +84,14 @@ if [ "$user_choice" -eq 1 ]; then
              exit 1
           fi
        fi
+ elif [ "$HDH" -eq 3 ]; then
+      if [ ! -e /mnt/a.iso ]; then
+          echo "Downloading..."
+          if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://phoenixnap.dl.sourceforge.net/project/mx-linux/Old/MX-21/Xfce/MX-21_x64.iso?viasf=1"; then
+             echo "Download failed!"
+             exit 1
+          fi
+      fi
              # Kiểm tra file ISO có thực sự tải được không
                       if [ ! -s /mnt/a.iso ]; then
                           echo "Error: ISO file is empty or corrupted!"
