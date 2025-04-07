@@ -72,7 +72,7 @@ if [ "$user_choice" -eq 1 ]; then
    if [ "$HDH" -eq 1 ]; then
      if [ ! -e /mnt/a.iso ]; then
         echo "Downloading..."
-        if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://mirror.rackspace.com/linuxmint/iso/stable/22.1/linuxmint-22.1-xfce-64bit.iso"; then
+        if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://mirror.rackspace.com/linuxmint/iso/stable/21.3/linuxmint-21.3-xfce-64bit.iso"; then
            echo "Download failed!"
            exit 1
         fi
@@ -88,7 +88,7 @@ if [ "$user_choice" -eq 1 ]; then
  elif [ "$HDH" -eq 3 ]; then
       if [ ! -e /mnt/a.iso ]; then
           echo "Downloading..."
-          if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://phoenixnap.dl.sourceforge.net/project/mx-linux/Old/MX-21/Xfce/MX-21_x64.iso?viasf=1"; then
+          if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://master.dl.sourceforge.net/project/mx-linux/Old/MX-23.1/Xfce/MX-23.1_x64.iso?viasf=1"; then
              echo "Download failed!"
              exit 1
           fi
