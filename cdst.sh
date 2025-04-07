@@ -4,18 +4,17 @@ echo "1.NoFastBoot"
 echo "2.FastBoot"
 read -p "Chọn Phiên Bản Phù Hợp(1or2): " Ver
   if [ "$Ver" -eq 1 ]; then
-    echo "You chose 1.NoFastBoot"
-    sleep 3
+      echo "You chose 1.NoFastBoot"
+      sleep 3
   elif [ "$Ver" -eq 2 ]; then
-    echo "You chose 2.FastBoot"
-    sleep 3
-    curl -s -o "FastBoot.sh" "https://github.com/nguyenbinh1289/y/raw/main/ware.sh"
-    sudo ./FastBoot.sh
-    exit
+       echo "You chose 2.FastBoot"
+       sleep 3
+       curl -s -o "FastBoot.sh" "https://github.com/nguyenbinh1289/y/raw/main/ware.sh"
+       sudo ./FastBoot.sh
+       exit
   else
      echo "Please Try Again!"
-echo "Chờ 5s trước khi tiếp tục"
-sleep 5
+     sleep 10
   fi
 
 SPICE_PORT=5924
@@ -181,9 +180,9 @@ fi
                    fi
              
                       # Kiểm tra file ISO có thực sự tải được không
-                      if [ ! -s /mnt/a.iso ]; then
+                      if [ ! -s /mnt/a.iso ] || [ ! -s /mnt/driver.iso ]; then
                           echo "Error: ISO file is empty or corrupted!"
-                          rm -f "/mnt/a.iso"
+                          rm -f "/mnt/a.iso" "/mnt/driver.iso"
                           exit 1
                       fi   
         fi
