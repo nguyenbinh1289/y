@@ -67,6 +67,7 @@ if [ "$user_choice" -eq 1 ]; then
    echo "Chọn Hệ Điều Hành Phù Hợp:"
    echo "1.Linux-Mint"
    echo "2.Debian"
+   echo "3.MX Linux"
    read -p "Nhập lựa chọn của bạn : " HDH
    if [ "$HDH" -eq 1 ]; then
      if [ ! -e /mnt/a.iso ]; then
