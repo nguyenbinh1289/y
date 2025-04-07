@@ -94,7 +94,7 @@ if [ "$user_choice" -eq 1 ]; then
              exit 1
           fi
       fi
- elif [ "$HDH" -eq 3 ]; then
+ elif [ "$HDH" -eq 4 ]; then
       if [ ! -e /mnt/a.iso ]; then
           echo "Downloading..."
           if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://mirror.freedif.org/archlinux/iso/2025.04.01/archlinux-x86_64.iso"; then
