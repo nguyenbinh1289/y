@@ -153,17 +153,15 @@ fi
                           echo "Download Failed!"
                           exit 1
                       fi
-                          # Cài gdown
-                          if ! command -v gdown &> /dev/null; then
-                             echo "Installing gdown..."
-                             pip install gdown || { echo "Failed to install gdown!"; exit 1; }
-                          fi
+  # Cài gdown
+      elif ! command -v gdown &> /dev/null; then
+           echo "Installing gdown..."
+           pip install gdown || { echo "Failed to install gdown!"; exit 1; }
 
-                          # Chạy Script
-                           if ! python3 gdown!.py; then
-                               echo "Failed to Installing ISo"
-                               exit 1
-                           fi     
+# Chạy Script
+      elif ! python3 gdown!.py; then
+           echo "Failed to Installing ISo"
+           exit 1     
                           
       elif [ "$HDH2" -eq 2 ]; then
              if [ ! -e /mnt/a.iso ]; then
@@ -173,22 +171,20 @@ fi
                             exit 1
                        fi
              fi       
-                  # Cài Driver cho Win
-                   if [ ! -e /mnt/driver.iso ]; then
-                      echo "Waiting!"
-                      sleep 1
-                       if ! aria2c -d /mnt/ -o driver.iso -x 16 -s 16 "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
-                            echo "Downloading Driver Failed!"
-                            exit 1
-                       fi
-                   fi
+    # Cài Driver cho Win
+      elif [ ! -e /mnt/driver.iso ]; then
+              echo "Waiting!"
+              sleep 1
+                if ! aria2c -d /mnt/ -o driver.iso -x 16 -s 16 "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
+                      echo "Downloading Driver Failed!"
+                      exit 1
+                fi
              
-                      # Kiểm tra file ISO có thực sự tải được không
-                      if [ ! -s /mnt/a.iso ] || [ ! -s /mnt/driver.iso ]; then
+  # Kiểm tra file ISO có thực sự tải được không
+      elif [ ! -s /mnt/a.iso ] || [ ! -s /mnt/driver.iso ]; then
                           echo "Error: ISO file is empty or corrupted!"
                           rm -f "/mnt/a.iso" "/mnt/driver.iso"
-                          exit 1
-                      fi   
+                          exit 1 
         fi
      #Starting Qemu
         sleep 3
