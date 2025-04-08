@@ -54,7 +54,15 @@ fi
 
 #Ổ cài
 DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 100000000000 && $2 < 150000000000 {print $1}' | head -n 1)
-
+if [ ! -e /mnt/disk.img ]; then
+    echo "Creating Disk..."
+    if ! qemu-img create -f raw /mnt/disk.img 445G; then
+        echo "Creating Disk Failed!"
+        sudo rm -rf /mnt/disk.img
+        exit 1
+    fi
+fi
+       
 # Hiển thị menu lựa chọn hệ điều hành
 echo "Chọn loại hệ điều hành để chạy VM:"
 echo "1.Linux"
@@ -74,6 +82,7 @@ if [ "$user_choice" -eq 1 ]; then
         echo "Downloading..."
         if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://mirror.rackspace.com/linuxmint/iso/stable/21.3/linuxmint-21.3-xfce-64bit.iso"; then
            echo "Download failed!"
+           sudo rm -rf /mnt/a.iso
            exit 1
         fi
      fi
@@ -82,6 +91,7 @@ if [ "$user_choice" -eq 1 ]; then
           echo "Downloading..."
           if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://saimei.ftp.acc.umu.se/debian-cd/current/amd64/iso-cd/debian-12.10.0-amd64-netinst.iso"; then
              echo "Download failed!"
+             sudo rm -rf /mnt/a.iso
              exit 1
           fi
        fi
@@ -90,6 +100,7 @@ if [ "$user_choice" -eq 1 ]; then
           echo "Downloading..."
           if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://www.dropbox.com/scl/fi/hcqyyt629d8tmxqy3vj80/MX-23.1_x64.iso?rlkey=ez6v1tl2atjihu1nzy74d2xj4&st=wy2wo60e&dl=1"; then
              echo "Download failed!"
+             sudo rm -rf /mnt/a.iso
              exit 1
           fi
       fi
@@ -98,13 +109,14 @@ if [ "$user_choice" -eq 1 ]; then
           echo "Downloading..."
           if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "https://mirror.freedif.org/archlinux/iso/2025.04.01/archlinux-x86_64.iso"; then
              echo "Download failed!"
+             sudo rm -rf /mnt/a.iso
              exit 1
           fi
       fi
              # Kiểm tra file ISO có thực sự tải được không
                       if [ ! -s /mnt/a.iso ]; then
                           echo "Error: ISO file is empty or corrupted!"
-                          rm -f "/mnt/a.iso"
+                          sudo rm -f "/mnt/a.iso"
                           exit 1
                       fi  
    fi
@@ -129,7 +141,9 @@ if [ "$user_choice" -eq 1 ]; then
       -device virtio-rng-pci \
       -enable-kvm \
       -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
-      -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
+      -drive file=/mnt/disk.img,format=raw,if=none,id=nvme1 \
+      -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=4 \
+      -device nvme,drive=nvme1,serial=deadbeaf2,num_queues=4 \
       -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
       -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
       -drive file=/mnt/a.iso,media=cdrom \
@@ -153,15 +167,18 @@ fi
                           echo "Download Failed!"
                           exit 1
                       fi
-  # Cài gdown
-      elif ! command -v gdown &> /dev/null; then
-           echo "Installing gdown..."
-           pip install gdown || { echo "Failed to install gdown!"; exit 1; }
+              fi
+                    # Cài gdown
+                     if ! command -v gdown &> /dev/null; then
+                         echo "Installing gdown..."
+                         pip install gdown || { echo "Failed to install gdown!"; exit 1; }
+                     fi
 
-# Chạy Script
-      elif ! python3 gdown!.py; then
-           echo "Failed to Installing ISo"
-           exit 1     
+                    # Chạy Script
+                      if ! python3 gdown!.py; then
+                          echo "Failed to Installing ISo"
+                          exit 1     
+                      fi
                           
       elif [ "$HDH2" -eq 2 ]; then
              if [ ! -e /mnt/a.iso ]; then
@@ -171,52 +188,57 @@ fi
                             exit 1
                        fi
              fi       
-    # Cài Driver cho Win
-      elif [ ! -e /mnt/driver.iso ]; then
-              echo "Waiting!"
-              sleep 1
-                if ! aria2c -d /mnt/ -o driver.iso -x 16 -s 16 "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
-                      echo "Downloading Driver Failed!"
-                      exit 1
-                fi
+                         # Cài Driver cho Win
+                           if [ ! -e /mnt/driver.iso ]; then
+                                echo "Waiting!"
+                                sleep 1
+                                if ! aria2c -d /mnt/ -o driver.iso -x 16 -s 16 "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
+                                   echo "Downloading Driver Failed!"
+                                   exit 1
+                                fi
+                           fi
              
-  # Kiểm tra file ISO có thực sự tải được không
-      elif [ ! -s /mnt/a.iso ] || [ ! -s /mnt/driver.iso ]; then
-                          echo "Error: ISO file is empty or corrupted!"
-                          rm -f "/mnt/a.iso" "/mnt/driver.iso"
-                          exit 1 
+                          # Kiểm tra file ISO có thực sự tải được không
+                             if [ ! -s /mnt/a.iso ] || [ ! -s /mnt/driver.iso ]; then
+                                  echo "Error: ISO file is empty or corrupted!"
+                                  sudo rm -f "/mnt/a.iso" "/mnt/driver.iso"
+                                  exit 1 
+                             fi
         fi
+        
      #Starting Qemu
         sleep 3
         clear
         echo "Đang khởi chạy máy ảo..."
         echo "Đã khởi động VM thành công!"
 
-        sudo kvm \
-       -daemonize \
-       -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-       -smp sockets=1,cores=2,threads=2 \
-       -M q35,usb=on \
-       -device usb-tablet \
-       -m 11G \
-       -device virtio-balloon-pci \
-       -vga virtio \
-       -net nic,netdev=n0,model=virtio-net-pci \
-       -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
-       -boot c \
-       -device virtio-serial-pci \
-       -device virtio-rng-pci \
-       -enable-kvm \
-       -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
-       -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
-       -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
-       -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
-       -drive file=/mnt/driver.iso,media=cdrom \
-       -drive file=/mnt/a.iso,media=cdrom \
-       -device intel-hda \
-       -device hda-duplex \
-       -chardev spicevmc,id=vdagent,name=vdagent \
-       -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
-       -spice port=${SPICE_PORT},disable-ticketing
-       exit
+       sudo kvm \
+  -enable-kvm \
+  -daemonize \
+  -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
+  -smp sockets=1,cores=2,threads=2 \
+  -m 11G \
+  -M q35,usb=on \
+  -device usb-tablet \
+  -vga virtio \
+  -device virtio-balloon-pci \
+  -device virtio-serial-pci \
+  -device virtio-rng-pci \
+  -device intel-hda \
+  -device hda-duplex \
+  -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
+  -device virtio-net-pci,netdev=n0 \
+  -boot c \
+  -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
+  -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
+  -drive file=/mnt/disk.img,format=raw,if=none,id=vdisk \
+  -device virtio-blk-pci,drive=vdisk,serial=vdisk001 \
+  -drive file=/dev/"$DL",format=raw,if=none,id=rawdisk \
+  -device virtio-blk-pci,drive=rawdisk,serial=phys001 \
+  -drive file=/mnt/driver.iso,media=cdrom \
+  -drive file=/mnt/a.iso,media=cdrom \
+  -chardev spicevmc,id=vdagent,name=vdagent \
+  -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
+  -spice port=${SPICE_PORT},disable-ticketing
+  exit
   fi
