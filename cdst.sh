@@ -109,6 +109,10 @@ if [ "$user_choice" -eq 1 ]; then
                       fi  
    fi
        # Chạy Qemu-Kvm Linux distro
+       sleep 3
+       clear
+        echo "Đang khởi chạy máy ảo..."
+        echo "Đã khởi động VM thành công"
          sudo kvm \
       -daemonize \
       -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
@@ -188,8 +192,9 @@ fi
         fi
      #Starting Qemu
         sleep 3
+        clear
         echo "Đang khởi chạy máy ảo..."
-        echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900(use novnc)"
+        echo "Đã khởi động VM thành công!"
 
         sudo kvm \
        -daemonize \
