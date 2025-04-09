@@ -187,7 +187,8 @@ fi
                             echo "Download Failed!"
                             exit 1
                        fi
-             fi       
+             fi 
+        fi
                          # Cài Driver cho Win
                            if [ ! -e /mnt/driver.iso ]; then
                                 echo "Waiting!"
@@ -204,7 +205,6 @@ fi
                                   sudo rm -f "/mnt/a.iso" "/mnt/driver.iso"
                                   exit 1 
                              fi
-        fi
         
      #Starting Qemu
         sleep 3
