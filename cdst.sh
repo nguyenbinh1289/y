@@ -20,9 +20,19 @@ read -p "Chọn Phiên Bản Phù Hợp(1or2): " Ver
 SPICE_PORT=5924
 max_tries=50
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
-echo "Đang cập nhật danh sách gói..."
-sudo apt update
-sudo apt install -y qemu-kvm unzip aria2 python3-pip
+if [ ! -e ./abc.txt ]; then
+    echo "Đang cập nhật danh sách gói..."
+    if ! sudo apt update; then
+        echo "Update Failed!"
+        exit 1
+    elif ! sudo apt install -y qemu-kvm unzip aria2 python3-pip; then
+          echo "Installing FAiled!"
+          exit 1
+    elif ! curl -fsSL https://tailscale.com/install.sh | sh; then
+          echo "Set Up For Remote Failed!"
+          exit 1
+    touch abc.txt
+fi
 clear
 
 if [ $? -ne 0 ]; then
@@ -152,6 +162,12 @@ if [ "$user_choice" -eq 1 ]; then
       -chardev spicevmc,id=vdagent,name=vdagent \
       -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
       -spice port=${SPICE_PORT},disable-ticketing
+          if [ ! -e ./tailscaled.state ]; then
+              if ! sudo tailscaled --state=tailscaled.state; then
+                  echo "Nope..."
+                  exit 1
+              fi
+          fi
       exit
 fi
 
@@ -240,5 +256,10 @@ fi
   -chardev spicevmc,id=vdagent,name=vdagent \
   -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
   -spice port=${SPICE_PORT},disable-ticketing
-  exit
+        if [ ! -e ./tailscaled.state ]; then
+            if ! sudo tailscaled --state=tailscaled.state; then
+            echo "Nope..."
+            exit 1
+            fi
+        fi
   fi
