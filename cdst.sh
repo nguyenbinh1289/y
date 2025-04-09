@@ -229,33 +229,33 @@ fi
         echo "Đã khởi động VM thành công!"
 
        sudo kvm \
-  -enable-kvm \
-  -daemonize \
-  -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-  -smp sockets=1,cores=2,threads=2 \
-  -m 11G \
-  -M q35,usb=on \
-  -device usb-tablet \
-  -vga virtio \
-  -device virtio-balloon-pci \
-  -device virtio-serial-pci \
-  -device virtio-rng-pci \
-  -device intel-hda \
-  -device hda-duplex \
-  -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
-  -device virtio-net-pci,netdev=n0 \
-  -boot c \
-  -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
-  -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
-  -drive file=/mnt/disk.img,format=raw,if=none,id=vdisk \
-  -device virtio-blk-pci,drive=vdisk,serial=vdisk001 \
-  -drive file=/dev/"$DL",format=raw,if=none,id=rawdisk \
-  -device virtio-blk-pci,drive=rawdisk,serial=phys001 \
-  -drive file=/mnt/driver.iso,media=cdrom \
-  -drive file=/mnt/a.iso,media=cdrom \
-  -chardev spicevmc,id=vdagent,name=vdagent \
-  -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
-  -spice port=${SPICE_PORT},disable-ticketing
+       -enable-kvm \
+       -daemonize \
+       -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
+       -smp sockets=1,cores=2,threads=2 \
+       -m 11G \
+       -M q35,usb=on \
+       -device usb-tablet \
+       -vga virtio \
+       -device virtio-balloon-pci \
+       -device virtio-serial-pci \
+       -device virtio-rng-pci \
+       -device intel-hda \
+       -device hda-duplex \
+       -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
+       -device virtio-net-pci,netdev=n0 \
+       -boot c \
+       -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
+       -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
+       -drive file=/mnt/disk.img,format=raw,if=none,id=vdisk \
+       -device virtio-blk-pci,drive=vdisk,serial=vdisk001 \
+       -drive file=/dev/"$DL",format=raw,if=none,id=rawdisk \
+       -device virtio-blk-pci,drive=rawdisk,serial=phys001 \
+       -drive file=/mnt/driver.iso,media=cdrom \
+       -drive file=/mnt/a.iso,media=cdrom \
+       -chardev spicevmc,id=vdagent,name=vdagent \
+       -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
+       -spice port=${SPICE_PORT},disable-ticketing
         if [ ! -e ./tailscaled.state ]; then
             if ! sudo tailscaled --state=tailscaled.state; then
             echo "Nope..."
@@ -263,3 +263,4 @@ fi
             fi
         fi
   fi
+fi
