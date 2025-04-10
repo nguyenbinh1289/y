@@ -87,6 +87,7 @@ if [ "$user_choice" -eq 1 ]; then
    echo "3.MX Linux"
    echo "4.Arch Linux"
    echo "5.Xubuntu 24.04"
+   echo "6.AntiX 23"
    read -p "Nhập lựa chọn của bạn : " HDH
    if [ "$HDH" -eq 1 ]; then
      if [ ! -e /mnt/a.iso ]; then
@@ -128,6 +129,15 @@ if [ "$user_choice" -eq 1 ]; then
        if [ ! -e /mnt/a.iso ]; then
           echo "Downloading..."
           if ! aria2c -d /mnt/ -o "a.iso" -x 16 -s 16 "http://mirror.us.leaseweb.net/ubuntu-cdimage/xubuntu/releases/24.04/release/xubuntu-24.04.2-minimal-amd64.iso"; then
+             echo "Download failed!"
+             sudo rm -rf /mnt/a.iso
+             exit 1
+          fi
+       fi
+ elif [ "$HDH" -eq 6 ]; then
+       if [ ! -e /mnt/a.iso ]; then
+          echo "Downloading..."
+          if ! wget -O "/mnt/a.iso" "https://pixeldrain.com/api/file/68oDFzbd?download"; then
              echo "Download failed!"
              sudo rm -rf /mnt/a.iso
              exit 1
