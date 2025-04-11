@@ -21,18 +21,14 @@ SPICE_PORT=5924
 max_tries=50
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 if [ ! -e ./abc.txt ]; then
-    echo "Đang cập nhật danh sách gói..."
-    if ! sudo apt update; then
-        echo "Update Failed!"
-        exit 1
-    elif ! sudo apt install -y qemu-kvm unzip aria2 python3-pip; then
-          echo "Installing FAiled!"
-          exit 1
-    elif ! curl -fsSL https://tailscale.com/install.sh | sh; then
-          echo "Set Up For Remote Failed!"
-          exit 1
-    touch abc.txt
+    echo "Đang cập nhật danh sách gói..." &&
+    sudo apt update &&
+    sudo apt install -y qemu-kvm unzip aria2 python3-pip &&
+    curl -fsSL https://tailscale.com/install.sh | sh &&
+    touch abc.txt ||
+    { echo "Đã có lỗi xảy ra trong quá trình cài đặt."; exit 1; }
 fi
+
 clear
 
 if [ $? -ne 0 ]; then
@@ -161,7 +157,7 @@ if [ "$user_choice" -eq 1 ]; then
       -smp sockets=1,cores=2,threads=2 \
       -M q35,usb=on \
       -device usb-tablet \
-      -m 11G \
+      -m 10G \
       -device virtio-balloon-pci \
       -vga virtio \
       -net nic,netdev=n0,model=virtio-net-pci \
@@ -199,7 +195,7 @@ fi
         if [ "$HDH2" -eq 1 ]; then
               if [ ! -e /workspaces/action/gdown!.py ]; then
                  echo "Downloading..."
-                      if ! wget -O "/workspaces/action/gdown!.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"; then
+                      if ! wget -O "/workspaces/action/DriveISO.py" "https://github.com/nguyenbinh1289/y/raw/main/c.py"; then
                           echo "Download Failed!"
                           exit 1
                       fi
@@ -211,7 +207,7 @@ fi
                      fi
 
                     # Chạy Script
-                      if ! python3 gdown!.py; then
+                      if ! python3 DriverISO.py; then
                           echo "Failed to Installing ISo"
                           exit 1     
                       fi
@@ -253,7 +249,7 @@ fi
        -daemonize \
        -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
        -smp sockets=1,cores=2,threads=2 \
-       -m 11G \
+       -m 10G \
        -M q35,usb=on \
        -device usb-tablet \
        -vga virtio \
