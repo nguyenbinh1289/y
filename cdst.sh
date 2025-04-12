@@ -207,8 +207,8 @@ fi
                      fi
 
                     # Chạy Script
-                      if ! python3 DriverISO.py; then
-                          echo "Failed to Installing ISo"
+                      if ! python3 DriveISO.py; then
+                          echo "Failed to Installing Iso"
                           exit 1     
                       fi
                           
