@@ -95,7 +95,6 @@ fi
       # Chờ 3 phút sau khi chạy file Python
       echo "Chờ 5s trước khi tiếp tục..."
       sleep 5
-
       # Giải nén các file .zip trong thư mục /mnt
        echo "Đang giải nén tất cả các file .zip trong /mnt..."
         unzip '/mnt/*.zip' -d /mnt/
@@ -134,3 +133,4 @@ sudo kvm \
        if [ -e ./noVNC ]; then
            ./noVNC/utils/novnc_proxy --listen 5924
        fi
+fi
