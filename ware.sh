@@ -69,8 +69,8 @@ else
     exit 1
 fi
 
-# Tải file Python
-if [ ! -e /mnt/a.py ] || [ ! -e /mnt/b.py ] || [ ! -e /mnt/a.qcow2 ]; then
+# Tải file Python và Vân vân
+if [ ! -e /mnt/"$file_name" ]; then
     sleep 3
     echo "Đang tải file $file_name từ $file_url..."
     aria2c -d /mnt/ -o "$file_name" -x 16 -s 16 "$file_url"
@@ -81,7 +81,7 @@ if [ ! -e /mnt/a.py ] || [ ! -e /mnt/b.py ] || [ ! -e /mnt/a.qcow2 ]; then
 fi
 
 # Cài đặt gdown và chạy file Python
-if [ -e /mnt/a.py ] || [ -e /mnt/b.py ]; then
+if [[ "$file_name" == *.py ]]; then
    echo "Đang cài đặt gdown và chạy file $file_name..."
     pip install gdown
    python3 "/mnt/$file_name"
@@ -90,8 +90,9 @@ if [ -e /mnt/a.py ] || [ -e /mnt/b.py ]; then
         echo "Lỗi khi chạy file Python. Vui lòng kiểm tra lại."
         exit 1
     fi
-
-    # Chờ 3 phút sau khi chạy file Python
+fi
+  if [[ -e /mnt/a.py || -e /mnt/b.py ]]
+      # Chờ 3 phút sau khi chạy file Python
       echo "Chờ 5s trước khi tiếp tục..."
       sleep 5
 
@@ -103,8 +104,7 @@ if [ -e /mnt/a.py ] || [ -e /mnt/b.py ]; then
             echo "Lỗi khi giải nén file. Vui lòng kiểm tra lại file tải về."
             exit 1
         fi
-fi
-
+  fi
 # Khởi chạy máy ảo với KVM
 echo "Đang khởi chạy máy ảo..."
 echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
