@@ -62,7 +62,7 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJiZW50by91YnVudHUtMjIuMDQvMjAyNTAyLjIxLjAvcWVtdS83NzU2YTgyNy1mZTg0LTExZWYtYTFhYi03YTA1ZTZhMjkzZWUiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1LTIyLjA0XzIwMjUwMi4yMS4wX3FlbXVfYW1kNjQuYm94In0.c6qhY8UYFRzceXcQn7EYsXQDuw5jiqEX4XgJDJWi9BQ"
+      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI1ZGQ1NmM1OC04ZDQ4LTQ0NzgtOWE1Zi0wYjNmYzgyYzRiNTkiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1c2VydmVyMjJfMC4wX3FlbXVfYW1kNjQuYm94In0.tYprxQPqKwTPaqlfna0u7rIlpD3WYbK03haABvT3KQk"
       file_name="a.qcow2"
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script và chọn 1 hoặc 2."
@@ -125,8 +125,7 @@ sudo kvm \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
     -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
     -daemonize \
-    -device intel-hda \
-    -device hda-duplex \
+    -soundhw hda \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
