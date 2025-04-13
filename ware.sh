@@ -10,7 +10,7 @@ if [ ! -e ./abc.txt ]; then
     echo "Đang cập nhật danh sách gói..." &&
     sudo apt update &&
     sudo apt install -y qemu-kvm unzip aria2 python3-pip &&
-    curl -fsSL https://tailscale.com/install.sh | sh &&
+    git clone https://github.com/novnc/noVNC.git &&
     touch abc.txt ||
     { echo "Đã có lỗi xảy ra trong quá trình cài đặt."; exit 1; }
 fi
@@ -125,7 +125,12 @@ sudo kvm \
     -drive file=/mnt/a.qcow2 \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
     -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
-    -monitor stdio \
+    -daemonize \
+    -device intel-hda \
+    -device hda-duplex \
     -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
     -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
     -vnc :0
+       if [ -e ./noVNC ]; then
+           ./noVNC/utils/novnc_proxy --listen 5924
+       fi
