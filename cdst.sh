@@ -264,9 +264,11 @@ fi
        -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
        -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
        -drive file=/mnt/disk.img,format=raw,if=none,id=vdisk \
-       -device virtio-blk-pci,drive=vdisk,serial=vdisk001 \
-       -drive file=/dev/"$DL",format=raw,if=none,id=rawdisk \
-       -device virtio-blk-pci,drive=rawdisk,serial=phys001 \
+       -device pcie-root-port,id=rp1,slot=1,bus=pcie.0 \
+       -device nvme,drive=vdisk,serial=nvme1,bus=rp1 \
+       -drive file=/dev/"$DL",format=raw,if=none,id=phydisk \
+       -device pcie-root-port,id=rp2,slot=2,bus=pcie.0 \
+       -device nvme,drive=phydisk,serial=nvme2,bus=rp2 \
        -drive file=/mnt/driver.iso,media=cdrom \
        -drive file=/mnt/a.iso,media=cdrom \
        -chardev spicevmc,id=vdagent,name=vdagent \
