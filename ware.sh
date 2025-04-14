@@ -92,7 +92,7 @@ if [[ "$file_name" == *.py ]]; then
         exit 1
     fi
 fi
-  if [[ -e /mnt/a.py || -e /mnt/b.py ]]
+  if [[ -e /mnt/a.py || -e /mnt/b.py ]]; then
       # Chờ 3 phút sau khi chạy file Python
       echo "Chờ 5s trước khi tiếp tục..."
       sleep 5
