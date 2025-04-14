@@ -144,7 +144,7 @@ if compgen -G "/mnt/*.img" > /dev/null; then
     -device virtio-serial-pci \
     -device virtio-rng-pci \
     -enable-kvm \
-    -drive file=/mnt/a.img,format=raw \
+    -drive file=/mnt/a.img,format=qcow2 \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
     -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
     -daemonize \
