@@ -58,9 +58,8 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJiMzRjMmQ1Yi0zNWYyLTQ3MjYtYmQ2OS01MDRmMThjY2JiMjQiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1MjIwNF80LjMuMTJfcWVtdV9hbWQ2NC5ib3gifQ._Je5dYhh8n_n-G7PtJ62JmPztYRORLl-9_Zq0_xhSIY"
-      #https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiIzNjFiNjE5Yi1jOTMzLTQyYWYtYmM4Zi1hZDVmNmM4MjMzZTAiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1LTIwLjA0LWRlc2t0b3AtYW1kNjRfMjAyNDAyMDEuMDFfbGlidmlydF9hbWQ2NC5ib3gifQ.wCir7xYYUgmwKj_ztdd1BSmZR3_ju4AA3c2nvqbPzkc
-      file_name1="a.img"
+      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiIzNjFiNjE5Yi1jOTMzLTQyYWYtYmM4Zi1hZDVmNmM4MjMzZTAiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1LTIwLjA0LWRlc2t0b3AtYW1kNjRfMjAyNDAyMDEuMDFfbGlidmlydF9hbWQ2NC5ib3gifQ.wCir7xYYUgmwKj_ztdd1BSmZR3_ju4AA3c2nvqbPzkc"
+      file_name="a.img"
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script và chọn 1 hoặc 2."
     exit 1
