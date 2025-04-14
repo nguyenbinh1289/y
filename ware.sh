@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Cảnh báo
-echo "chờ 5s để tiếp tục"
-sleep 5
-
 # Cập nhật danh sách gói và cài đặt QEMU-KVM
 echo "Đang cập nhật danh sách gói..."
 if [ ! -e ./abc.txt ]; then
