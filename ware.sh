@@ -60,7 +60,7 @@ elif [ "$user_choice" -eq 2 ]; then
 elif [ "$user_choice" -eq 3 ]; then
       file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJiMzRjMmQ1Yi0zNWYyLTQ3MjYtYmQ2OS01MDRmMThjY2JiMjQiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1MjIwNF80LjMuMTJfcWVtdV9hbWQ2NC5ib3gifQ._Je5dYhh8n_n-G7PtJ62JmPztYRORLl-9_Zq0_xhSIY"
       #https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiIzNjFiNjE5Yi1jOTMzLTQyYWYtYmM4Zi1hZDVmNmM4MjMzZTAiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1LTIwLjA0LWRlc2t0b3AtYW1kNjRfMjAyNDAyMDEuMDFfbGlidmlydF9hbWQ2NC5ib3gifQ.wCir7xYYUgmwKj_ztdd1BSmZR3_ju4AA3c2nvqbPzkc
-      file_name="a.qcow2"
+      file_name1="a.img"
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script và chọn 1 hoặc 2."
     exit 1
@@ -102,9 +102,10 @@ fi
         fi
   fi
 # Khởi chạy máy ảo với KVM
-echo "Đang khởi chạy máy ảo..."
-echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
-sudo kvm \
+if compgen -G "/mnt/*.qcow2" > /dev/null; then
+   echo "Đang khởi chạy máy ảo..."
+   echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
+    sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
     -smp sockets=1,cores=2,threads=2 \
     -M q35,usb=on \
@@ -119,6 +120,31 @@ sudo kvm \
     -device virtio-rng-pci \
     -enable-kvm \
     -drive file=/mnt/a.qcow2 \
+    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
+    -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
+    -daemonize \
+    -soundhw hda \
+    -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
+    -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
+    -vnc :0
+fi
+
+if compgen -G "/mnt/*.img" > /dev/null; then
+    sudo kvm \
+    -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
+    -smp sockets=1,cores=2,threads=2 \
+    -M q35,usb=on \
+    -device usb-tablet \
+    -m 10G \
+    -device virtio-balloon-pci \
+    -vga virtio \
+    -net nic,netdev=n0,model=virtio-net-pci \
+    -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
+    -boot c \
+    -device virtio-serial-pci \
+    -device virtio-rng-pci \
+    -enable-kvm \
+    -drive file=/mnt/a.img,format=raw \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
     -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
     -daemonize \
