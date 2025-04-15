@@ -115,7 +115,7 @@ if compgen -G "/mnt/*.qcow2" > /dev/null; then
     -device virtio-serial-pci \
     -device virtio-rng-pci \
     -enable-kvm \
-    -drive file=/mnt/a.qcow2 \
+    -drive file=/mnt/a.qcow2,format=qcow2 \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
     -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
     -daemonize \
