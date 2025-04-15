@@ -58,7 +58,7 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJCb3hDYWxpL051bGwvMi4wLjIuNS8yLjAuMi41LzM3MTg2Y2Y5LTE5YjktMTFmMC04YTI5LWVhNDA3MGMyZmNmMSIsIm1vZGUiOiJyIiwiZmlsZW5hbWUiOiJOdWxsXzIuMC4yLjVfMi4wLjIuNV9hbWQ2NC5ib3gifQ.YDQzZUTgisfGvYWIAdAJun5RoeMUReNmqsyF7_m2rpI"
+      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiIxNTE2ZGRiNi1lOTM5LTQyNDQtYjY5Zi02OTYxN2M1N2M1ZTkiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1LTIyLjA0LWRlc2t0b3AtYW1kNjRfMS4wLjBfbGlidmlydF91bmtub3duLmJveCJ9.5ucZ0W-VeANDb5LA4_47ffNguKOYQPzpZBA1BLV9AVM"
       file_name="a.qcow2"
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script và chọn 1 hoặc 2."
