@@ -58,8 +58,8 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiIzNjFiNjE5Yi1jOTMzLTQyYWYtYmM4Zi1hZDVmNmM4MjMzZTAiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1LTIwLjA0LWRlc2t0b3AtYW1kNjRfMjAyNDAyMDEuMDFfbGlidmlydF9hbWQ2NC5ib3gifQ.wCir7xYYUgmwKj_ztdd1BSmZR3_ju4AA3c2nvqbPzkc"
-      file_name="a.img"
+      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJCb3hDYWxpL051bGwvMi4wLjIuNS8yLjAuMi41LzM3MTg2Y2Y5LTE5YjktMTFmMC04YTI5LWVhNDA3MGMyZmNmMSIsIm1vZGUiOiJyIiwiZmlsZW5hbWUiOiJOdWxsXzIuMC4yLjVfMi4wLjIuNV9hbWQ2NC5ib3gifQ.YDQzZUTgisfGvYWIAdAJun5RoeMUReNmqsyF7_m2rpI"
+      file_name="a.qcow2"
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script và chọn 1 hoặc 2."
     exit 1
@@ -143,7 +143,7 @@ if compgen -G "/mnt/*.img" > /dev/null; then
     -device virtio-serial-pci \
     -device virtio-rng-pci \
     -enable-kvm \
-    -drive file=/mnt/a.img,format=qcow2 \
+    -drive file=/mnt/a.qcow2 \
     -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
     -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
     -daemonize \
