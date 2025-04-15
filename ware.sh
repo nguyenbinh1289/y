@@ -5,7 +5,7 @@ echo "Đang cập nhật danh sách gói..."
 if [ ! -e ./abc.txt ]; then
     echo "Đang cập nhật danh sách gói..." &&
     sudo apt update &&
-    sudo apt install -y qemu-kvm unzip aria2 python3-pip &&
+    sudo apt install -y qemu-kvm p7zip-full aria2 python3-pip &&
     git clone https://github.com/novnc/noVNC.git &&
     touch abc.txt ||
     { echo "Đã có lỗi xảy ra trong quá trình cài đặt."; exit 1; }
@@ -58,8 +58,8 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiIxNTE2ZGRiNi1lOTM5LTQyNDQtYjY5Zi02OTYxN2M1N2M1ZTkiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoidWJ1bnR1LTIyLjA0LWRlc2t0b3AtYW1kNjRfMS4wLjBfbGlidmlydF91bmtub3duLmJveCJ9.5ucZ0W-VeANDb5LA4_47ffNguKOYQPzpZBA1BLV9AVM"
-      file_name="a.qcow2"
+      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJCb3hDYWxpL051bGwvMi4wLjIuNS8yLjAuMi41LzM3MTg2Y2Y5LTE5YjktMTFmMC04YTI5LWVhNDA3MGMyZmNmMSIsIm1vZGUiOiJyIiwiZmlsZW5hbWUiOiJOdWxsXzIuMC4yLjVfMi4wLjIuNV9hbWQ2NC5ib3gifQ.YDQzZUTgisfGvYWIAdAJun5RoeMUReNmqsyF7_m2rpI"
+      file_name="kali.7z"
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script và chọn 1 hoặc 2."
     exit 1
@@ -87,48 +87,20 @@ if [[ "$file_name" == *.py ]]; then
         exit 1
     fi
 fi
-  if [[ -e /mnt/a.py || -e /mnt/b.py ]]; then
-      # Chờ 3 phút sau khi chạy file Python
-      echo "Chờ 5s trước khi tiếp tục..."
-      sleep 5
+
       # Giải nén các file .zip trong thư mục /mnt
        echo "Đang giải nén tất cả các file .zip trong /mnt..."
-        unzip '/mnt/*.zip' -d /mnt/
+        7z x /mnt/*.zip -o /mnt/ || 7z x /mnt/*.7z -o /mnt/
        clear
         if [ $? -ne 0 ]; then
             echo "Lỗi khi giải nén file. Vui lòng kiểm tra lại file tải về."
             exit 1
         fi
-  fi
 # Khởi chạy máy ảo với KVM
+    mv /mnt/kali-linux-2025.1a-qemu-amd64.qcow2 /mnt/a.qcow2
 if compgen -G "/mnt/*.qcow2" > /dev/null; then
    echo "Đang khởi chạy máy ảo..."
    echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
-    sudo kvm \
-    -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-    -smp sockets=1,cores=2,threads=2 \
-    -M q35,usb=on \
-    -device usb-tablet \
-    -m 10G \
-    -device virtio-balloon-pci \
-    -vga virtio \
-    -net nic,netdev=n0,model=virtio-net-pci \
-    -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
-    -boot c \
-    -device virtio-serial-pci \
-    -device virtio-rng-pci \
-    -enable-kvm \
-    -drive file=/mnt/a.qcow2 \
-    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
-    -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
-    -daemonize \
-    -soundhw hda \
-    -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
-    -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
-    -vnc :0
-fi
-
-if compgen -G "/mnt/*.img" > /dev/null; then
     sudo kvm \
     -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
     -smp sockets=1,cores=2,threads=2 \
