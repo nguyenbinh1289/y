@@ -5,7 +5,7 @@ print('1.\tNo SoftWare-10\n2.\tWin7')
 
 Version = input("Chọn phiên Bản Phù Hợp: ")
 iso_path = "/mnt/a.iso"
-if Version == "2":
+if Version == "1":
     url = "https://drive.google.com/uc?id=1wpE_EE4JDUtD77ILXcz5xl-bOUppinSP"
 elif Version == "2":
     url = "https://drive.google.com/uc?id=1qilZKoRPTueRs5BxCbNTMi2uMIIF6Bhu"
