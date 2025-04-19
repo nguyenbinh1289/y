@@ -97,6 +97,16 @@ fi
             exit 1
         fi
     fi
+
+if [ ! -e /mnt/driver.iso ]; then
+     echo "Waiting!"
+     sleep 1
+    if ! aria2c -d /mnt/ -o driver.iso -x 16 -s 16 "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.266-1/virtio-win-0.1.266.iso"; then
+        echo "Downloading Driver Failed!"
+        exit 1
+    fi
+fi
+
 # Khởi chạy máy ảo với KVM
 if compgen -G "/mnt/*.qcow2" > /dev/null; then
    echo "Đang khởi chạy máy ảo..."
@@ -122,10 +132,11 @@ if compgen -G "/mnt/*.qcow2" > /dev/null; then
   -drive file=/dev/"$DL",format=raw,if=none,id=nvme0,aio=native,cache=none \
   -device pcie-root-port,id=rp2,slot=2,bus=pcie.0 \
   -device nvme,drive=nvme0,serial=deadbeaf2,num_queues=4,bus=rp2 \
-  -drive if=pflash,format=raw,readonly=on,file=/usr/share/ovmf/OVMF_CODE.fd \
-  -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF_VARS.fd \
+  -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE.fd \
+  -drive if=pflash,format=raw,readonly=off,file=/usr/share/OVMF/OVMF_VARS.fd \
   -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
   -device intel-hda -device hda-duplex \
+  -drive file=/mnt/driver.iso,media=cdrom \
   -vnc :0
        if [ -e ./noVNC ]; then
            ./noVNC/utils/novnc_proxy --listen 5924
