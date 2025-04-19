@@ -45,7 +45,7 @@ DL=$(lsblk -b --output NAME,SIZE,MOUNTPOINT | awk '$2 > 100000000000 && $2 < 150
 echo "Chọn hệ điều hành để chạy VM:"
 echo "1. Windows 10/FastBoot"
 echo "2. Windows 11/FastBoot"
-echo "3.Ubuntu 22.04 -Cấp Tốc"
+echo "3.Win10X -Cấp Tốc"
 
 read -p "Nhập lựa chọn của bạn: " user_choice
 
@@ -58,8 +58,8 @@ elif [ "$user_choice" -eq 2 ]; then
     file_url="https://github.com/jshruwyd/discord-vps-creator/raw/refs/heads/main/b.py"
     file_name="b.py"
 elif [ "$user_choice" -eq 3 ]; then
-      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJCb3hDYWxpL051bGwvMi4wLjIuNS8yLjAuMi41LzM3MTg2Y2Y5LTE5YjktMTFmMC04YTI5LWVhNDA3MGMyZmNmMSIsIm1vZGUiOiJyIiwiZmlsZW5hbWUiOiJOdWxsXzIuMC4yLjVfMi4wLjIuNV9hbWQ2NC5ib3gifQ.YDQzZUTgisfGvYWIAdAJun5RoeMUReNmqsyF7_m2rpI"
-      file_name="kali.7z"
+      file_url="https://api.cloud.hashicorp.com/vagrant-archivist/v1/object/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiJEcml2ZWZpbGUvTWV0YUJveC8yLjAuMi41L01ldGFCb3hMaXRlMTBxY293Mi9lOTY3NjFiYi0xZDIyLTExZjAtYWU1Yi01NmMzOGUzODA3MmMiLCJtb2RlIjoiciIsImZpbGVuYW1lIjoiTWV0YUJveF8yLjAuMi41X01ldGFCb3hMaXRlMTBxY293Ml91bmtub3duLmJveCJ9.J7tvpAZ2dUf5efdf3Pns0WeW6fPegVfyeEn6iHXsy70"
+      file_name="a.qcow2"
 else
     echo "Lựa chọn không hợp lệ. Vui lòng chạy lại script và chọn 1 hoặc 2."
     exit 1
@@ -88,41 +88,45 @@ if [[ "$file_name" == *.py ]]; then
     fi
 fi
 
-      # Giải nén các file .zip trong thư mục /mnt
+# Giải nén các file .zip trong thư mục /mnt
        echo "Đang giải nén tất cả các file .zip trong /mnt..."
+    if [ -e /mnt/*.zip ] || [ -e /mnt/*.7z ]; then     
         7z x /mnt/*.zip -o /mnt/ || 7z x /mnt/*.7z -o /mnt/
-       clear
         if [ $? -ne 0 ]; then
             echo "Lỗi khi giải nén file. Vui lòng kiểm tra lại file tải về."
             exit 1
         fi
+    fi
 # Khởi chạy máy ảo với KVM
-    mv /mnt/kali-linux-2025.1a-qemu-amd64.qcow2 /mnt/a.qcow2
 if compgen -G "/mnt/*.qcow2" > /dev/null; then
    echo "Đang khởi chạy máy ảo..."
    echo "Đã khởi động VM thành công vui lòng tự cài ngrok và mở cổng 5900"
     sudo kvm \
-    -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
-    -smp sockets=1,cores=2,threads=2 \
-    -M q35,usb=on \
-    -device usb-tablet \
-    -m 10G \
-    -device virtio-balloon-pci \
-    -vga virtio \
-    -net nic,netdev=n0,model=virtio-net-pci \
-    -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
-    -boot c \
-    -device virtio-serial-pci \
-    -device virtio-rng-pci \
-    -enable-kvm \
-    -drive file=/mnt/a.qcow2,format=qcow2 \
-    -drive file=/dev/"$DL",format=raw,if=none,id=nvme0 \
-    -device nvme,drive=nvme0,serial=deadbeaf1,num_queues=8 \
-    -daemonize \
-    -soundhw hda \
-    -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF.fd \
-    -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
-    -vnc :0
+  -daemonize \
+  -cpu host,+topoext,hv_relaxed,hv_spinlocks=0x1fff,hv-passthrough,+pae,+nx,kvm=on,+svm \
+  -smp sockets=1,cores=2,threads=2 \
+  -M q35,usb=on \
+  -device usb-tablet \
+  -m 11G \
+  -device virtio-balloon-pci \
+  -vga virtio \
+  -device virtio-net-pci,netdev=n0 \
+  -netdev user,id=n0,hostfwd=tcp::3389-:3389 \
+  -boot c \
+  -device virtio-serial-pci \
+  -device virtio-rng-pci \
+  -enable-kvm \
+  -drive file=/mnt/a.qcow2,format=qcow2,if=none,id=nvmeDisk,cache=none,aio=native \
+  -device pcie-root-port,id=rp1,slot=1,bus=pcie.0 \
+  -device nvme,drive=nvmeDisk,serial=deadbeaf1,num_queues=4,bus=rp1 \
+  -drive file=/dev/"$DL",format=raw,if=none,id=nvme0,aio=native,cache=none \
+  -device pcie-root-port,id=rp2,slot=2,bus=pcie.0 \
+  -device nvme,drive=nvme0,serial=deadbeaf2,num_queues=4,bus=rp2 \
+  -drive if=pflash,format=raw,readonly=on,file=/usr/share/ovmf/OVMF_CODE.fd \
+  -drive if=pflash,format=raw,readonly=off,file=/usr/share/ovmf/OVMF_VARS.fd \
+  -uuid e47ddb84-fb4d-46f9-b531-14bb15156336 \
+  -device intel-hda -device hda-duplex \
+  -vnc :0
        if [ -e ./noVNC ]; then
            ./noVNC/utils/novnc_proxy --listen 5924
        fi
